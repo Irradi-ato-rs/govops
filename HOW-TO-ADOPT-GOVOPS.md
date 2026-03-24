@@ -1,4 +1,6 @@
-# How to Adopt Irradi.ato.rs GovOps Governance#Adoption is **explicit**, **opt‑in**, **reviewable**, and **reversible**.
+# How to Adopt Irradi.ato.rs GovOps system, governance-as-a-service.
+
+#Adoption is **explicit**, **opt‑in**, **reviewable**, and **reversible**.
 
 This repository (**govops**) documents the process.
 **Adoption itself always occurs in the adopting repository.**
