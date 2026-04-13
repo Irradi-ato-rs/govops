@@ -3,6 +3,8 @@
 This repository defines the **human and procedural governance authority** for the
 Irradi‑ato‑rs GovOps system.
 
+The GovOps Spec Final v0.9 is stand-alone and is not dependent on any artifact under Irradi.ato.rs' repository.
+
 It documents **who governs**, **how governance decisions are handled**, and **how governance
 questions are escalated**, without performing validation or enforcement itself.
 
