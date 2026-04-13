@@ -46,9 +46,7 @@
 29. Implementation Roadmap
 30. Formal Abstraction Layer
 31. Machine-Readable Protocol Layer (GovOps Protocol)
-32. Relationship to v1.0 and v1.0-AF+ Specifications
-33. Constitutional Conditions and System Outcomes
-34. Federation and Multi-Entity Coordination
+32. Federation and Multi-Entity Coordination
 35. Glossary
 
 ---
