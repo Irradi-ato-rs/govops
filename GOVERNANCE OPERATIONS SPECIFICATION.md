@@ -2365,7 +2365,7 @@ Every Federation Agreement must define:
 **Classification:** Public Release
 
 **Total Sections:** 35
-**Total Defined Terms:** 100+
+**Total Defined Terms:** 87
 **Operational Disciplines:** 15 (10 Implementation + 4 Governance-Function + 1 AIOps)
 **Constitutional Conditions:** 3
 **Governance Capacity Components:** 4
