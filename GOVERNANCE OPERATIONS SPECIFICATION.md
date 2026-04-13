@@ -2189,102 +2189,13 @@ Any Governing Entity implementing this specification at Tier 2 or above must:
 
 ---
 
-## 32. Relationship to v1.0 and v1.0-AF+ Specifications
+## 32. Federation and Multi-Entity Coordination
 
 ### 32.1 Purpose
 
-This section clarifies the relationship between this v0.9 specification and the companion v1.0 and v1.0-AF+ specifications. It ensures that all three documents are understood as a coherent system.
-
-### 32.2 Document Hierarchy
-
-The three specifications form a three-layer hierarchy:
-
-**Layer 1 — v0.9 (Detailed Operational Specification):** This document. It defines the complete operational architecture, all requirements, all definitions, all constraints, and all implementation details. It is the authoritative source for all governance operations.
-
-**Layer 2 — v1.0 (Executive Summary and Architectural Blueprint):** A condensed summary of v0.9 that captures the core principles, fundamental invariants, and system architecture. Designed for stakeholders who need to understand the governance system at a high level without reading the full operational specification.
-
-**Layer 3 — v1.0-AF+ (Formal Verification and Extension Layer):** A formalization of v0.9 that provides the mathematical and logical representations, the machine-readable protocol definitions, and the extensions required for future evolution.
-
-### 32.3 Consistency Requirements
-
-The three specifications must satisfy the following consistency requirements:
-
-- **No Contradiction:** No statement in v1.0 or v1.0-AF+ may contradict any statement in v0.9
-- **Complete Coverage:** Every governance requirement in v0.9 must be represented in v1.0 and v1.0-AF+
-- **Lossless Encoding:** The v1.0 and v1.0-AF+ specifications must be lossless encodings of v0.9
-- **Semantic Equivalence:** Where different terminology is used, it must be explicitly mapped with demonstrated equivalence
-
-### 32.4 Implementation Guidance
-
-A Governing Entity implementing this specification should:
-
-1. **Read v1.0 first** to understand the high-level governance architecture and principles
-2. **Read v0.9 in full** to understand all operational requirements and constraints
-3. **Reference v1.0-AF+** when implementing machine-readable protocols or formal verification systems
-4. **Treat v0.9 as the authoritative source** for any questions about governance requirements or constraints
-
----
-
-## 33. Constitutional Conditions and System Outcomes
-
-### 33.1 Purpose
-
-This section clarifies the relationship between the Three Constitutional Conditions and the system outcomes. It ensures that the v1.0 summary does not create confusion about what constitutes valid governance.
-
-### 33.2 The Three Constitutional Conditions
-
-**Constitutional Condition I — The Existence Condition:**
-
-```
-Governance exists if and only if Governance Capacity exceeds
-the Governance Risk Level as independently observed.
-```
-
-**Constitutional Condition II — The Human Sovereignty Condition:**
-
-```
-No automated system holds, exercises, or is delegated Sovereign Decision authority.
-All Sovereign Decisions require Human Authority approval.
-```
-
-**Constitutional Condition III — The Verified Reality Condition:**
-
-```
-No governance decision is valid unless the reality on which it is based
-has been confirmed through Multi-Observer Verification with no Disagreement Condition.
-```
-
-### 33.3 System Outcomes vs. Conditions
-
-The v1.0 specification describes five system outcomes that result from satisfying the Three Constitutional Conditions:
-
-1. **Legitimate, accountable authority** — Outcome of Constitutional Condition II combined with Authority and Decision Structures
-2. **Bounded and observable execution** — Outcome of Constitutional Condition II combined with Human and Machine Authority partition
-3. **Coherent institutional structure** — Outcome of Governance Architecture and Institutional Integrity component
-4. **Verified multi-source perception** — Outcome of Constitutional Condition III combined with Three-Observer Rule
-5. **Dominance over instability** — Outcome of Constitutional Condition I combined with Sustainability Condition
-
-### 33.4 Equivalence Statement
-
-The Three Constitutional Conditions are **not equivalent to** the five system outcomes. Rather, the three conditions are **sufficient to produce** the five outcomes. A system that satisfies all three Constitutional Conditions will exhibit all five outcomes.
-
-### 33.5 Failure Modes
-
-| Constitutional Condition | Failure Consequence | System Outcome Failure |
-|---|---|---|
-| Condition I (Governance Capacity > Risk Level) | Governance does not exist | Dominance over instability is lost |
-| Condition II (No autonomous Sovereign Decisions) | Authority is transferred to machines | Legitimate, accountable authority is lost |
-| Condition III (Verified Reality) | Decisions are based on unverified observations | Verified multi-source perception is lost |
-
----
-
-## 34. Federation and Multi-Entity Coordination
-
-### 34.1 Purpose
-
 This section extends the Federation framework to clarify how multiple independent Governing Entities can coordinate governance operations while preserving the Three Constitutional Conditions and the operational requirements of this specification.
 
-### 34.2 Federation Principle
+### 32.2 Federation Principle
 
 A Federation is a voluntary association of independent Governing Entities that coordinate governance operations through the GovOps Protocol while maintaining full operational and governance sovereignty.
 
@@ -2296,7 +2207,7 @@ Each member entity:
 - Operates under its own Operating Mode (Normal, Stress, or Crisis)
 - Participates in federation coordination through the GovOps Protocol
 
-### 34.3 Federation Governance Capacity
+### 32.3 Federation Governance Capacity
 
 The governance capacity of a federated system is computed as:
 
@@ -2312,7 +2223,7 @@ Where:
 
 The Federation Floor establishes the minimum acceptable federated Governance Capacity. If the federated system's Governance Capacity falls below the Federation Floor, the Federation Governance Body must activate a Federation-Level Response Cascade.
 
-### 34.4 Federation-Level Response Cascade
+### 32.4 Federation-Level Response Cascade
 
 When the federated system's Governance Capacity falls below the Federation Floor, the following phases activate:
 
@@ -2324,7 +2235,7 @@ When the federated system's Governance Capacity falls below the Federation Floor
 
 **Phase 4 — Federation Reconstruction:** The Federation Governance Body conducts a post-incident review to identify the structural cause of the federation-level instability and implements measures to prevent recurrence.
 
-### 34.5 Cross-Federation Security
+### 32.5 Cross-Federation Security
 
 **Independent Verification:** Each member entity validates all observations and data received from other Federation members through its own Reality Integrity Protocol.
 
@@ -2334,7 +2245,7 @@ When the federated system's Governance Capacity falls below the Federation Floor
 
 **Federation-Level Threat Intelligence:** The Federation Governance Body maintains a shared threat intelligence feed that alerts all member entities to threats detected in any member.
 
-### 34.6 Federation Interoperability
+### 32.6 Federation Interoperability
 
 All federation coordination operates through the GovOps Protocol. This ensures:
 
@@ -2343,7 +2254,7 @@ All federation coordination operates through the GovOps Protocol. This ensures:
 - **Governance Context Alignment:** Each member entity can verify that federation coordination messages are compatible with its current Operating Mode and Governance Capacity state
 - **Audit Trail Completeness:** All federation coordination is recorded in each member entity's Memory Layer
 
-### 34.7 Federation Agreement Requirements
+### 32.7 Federation Agreement Requirements
 
 Every Federation Agreement must define:
 
@@ -2357,7 +2268,7 @@ Every Federation Agreement must define:
 
 ---
 
-## 35. Glossary
+## 33. Glossary
 
 | Term | Definition |
 |---|---|
