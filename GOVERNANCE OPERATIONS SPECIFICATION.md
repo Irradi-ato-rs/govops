@@ -153,6 +153,8 @@ This section defines every term used in this specification. A term defined here 
 
 **Normal State:** The operating condition when Governance Capacity substantially exceeds the Governance Risk Level.
 
+**Observation Condition:** All four components of the Governance Capacity formula must be Independently Observed to be valid inputs. Self-Declared Values are not valid.
+
 **Oversight Body:** An independent body with authority to investigate, declare, and require remedy of governance failures. The Oversight Body must be structurally independent of the Governing Entity it oversees.
 
 **Policy Operations Discipline:** The operational discipline responsible for translating governance policy into operational rules and controls implementable across all disciplines, and for verifying that operational practice is consistent with policy intent.
@@ -230,7 +232,68 @@ This is not a mathematical convenience. It reflects an observable truth about go
 
 **The weakest component determines the operational ceiling.** When components have significantly different values, the product is dominated by the smallest. A governance system with Fidelity = 0.9, Capacity to Act = 0.8, Institutional Integrity = 0.1, and Adaptive Transparency = 0.85 has effective Governance Capacity close to 0.1, regardless of the strength of the other three. This is the Weakest-Link Property. It defines the governance investment priority: address the weakest component first. Strengthening strong components while a weak component remains unaddressed produces negligible improvement in total Governance Capacity.
 
-### 2.3 The Sustainability Condition
+### 2.3 Governance Capacity Measurement
+
+Each component of the Governance Capacity formula must be independently observed and numerically quantified on a standardised scale. The measurement framework is as follows:
+
+**Measurement Scale:** Each component is measured on a scale from 0.0 to 1.0, where:
+- 0.0 represents complete absence of the component
+- 0.5 represents adequate but not optimal presence of the component
+- 1.0 represents maximum achievable presence of the component
+
+**Fidelity Measurement** is conducted through:
+- Stakeholder welfare indicators: independently observed signals of whether stakeholders' interests are being served
+- Stakeholder feedback channels: structured collection of stakeholder assessment of governance alignment with their interests
+- Outcome analysis: comparison of governance decisions against stated stakeholder interests
+- Third-party assessment: independent evaluation of whether governance outcomes align with stakeholder benefit
+
+Fidelity measurement must be based on independently observed stakeholder welfare signals, not on the Governing Entity's self-assessment of its own fidelity.
+
+**Capacity to Act Measurement** is conducted through:
+- Decision execution rate: percentage of approved governance decisions that are successfully executed
+- Execution latency: time from decision approval to observable effect on the governed system
+- Scope coverage: percentage of the governed system within the Governing Entity's operational control
+- Resource availability: independently observed assessment of whether the Governing Entity has sufficient resources to execute its decisions
+
+Capacity to Act measurement must account for both the speed and the scope of the Governing Entity's ability to produce real effects.
+
+**Institutional Integrity Measurement** is conducted through:
+- Authority adherence: percentage of governance actions that remain within the actor's delegated authority
+- Constraint effectiveness: independently observed assessment of whether governance constraints actually constrain behaviour
+- Accountability completeness: percentage of governance actions that are fully auditable and attributable
+- Structure stability: independently observed assessment of whether governance structures remain stable under stress
+
+Institutional Integrity measurement must be based on independent observation of whether constraints actually work, not on whether they exist on paper.
+
+**Adaptive Transparency Measurement** is conducted through:
+- Observation coverage: percentage of the governed system within the Governance Operations Centre's observational scope
+- Observation latency: time from event occurrence to observation intake by the Centre
+- Adaptation responsiveness: time from identification of a governance issue to implementation of a corrective response
+- Knowledge completeness: independently observed assessment of the Epistemic Field — what the governance system knows, what it disputes, what it does not know
+
+Adaptive Transparency measurement must account for both the speed and the completeness of the governance system's self-awareness.
+
+### 2.4 Independent Observation of Components
+
+Each Governance Capacity component must be independently observed by at least two structurally independent observer types. Where observations diverge, the Disagreement Condition activates and the Governance Risk Level increases until the disagreement is resolved.
+
+The observation frequency for each component is:
+- Fidelity: Continuously through stakeholder feedback channels; formally assessed at minimum quarterly
+- Capacity to Act: Continuously through execution monitoring; formally assessed at minimum quarterly
+- Institutional Integrity: Continuously through audit mechanisms; formally assessed at minimum quarterly
+- Adaptive Transparency: Continuously through observability monitoring; formally assessed at minimum quarterly
+
+### 2.5 Governance Capacity Aggregation
+
+When multiple independent observations of the same component produce different values, the following aggregation rule applies:
+
+```
+Observed Component Value = Minimum(all independent observations)
+```
+
+The minimum value governs. This reflects the principle that a component is only as strong as its weakest independent assessment. If one observer assesses Fidelity at 0.8 and another assesses it at 0.6, the Governance Capacity calculation uses 0.6.
+
+### 2.6 The Sustainability Condition
 
 For a governed system to remain governed, its Governance Capacity must exceed its Governance Risk Level at all times:
 
@@ -240,7 +303,7 @@ Governance Capacity(at time T)  >  Governance Risk Level(at time T)
 
 This condition must hold continuously. It is not satisfied by a historical calculation or a periodic assessment. A system that achieved Governance Capacity greater than Governance Risk Level at a past point in time is not thereby governed at a current point in time.
 
-### 2.4 The Entropic Risk Property
+### 2.7 The Entropic Risk Property
 
 The Governance Risk Level always tends to increase in the absence of active governance effort:
 
@@ -257,7 +320,43 @@ This is the Entropic Risk Property. It establishes that:
 
 **The Sustainability Condition must be actively maintained, not periodically verified.** A governance system that checks compliance once per year and does nothing in between is a governance system in which the Governance Risk Level may have grown to exceed Governance Capacity before the next check occurs.
 
-### 2.5 The Observation Condition
+### 2.8 Governance Risk Level Aggregation
+
+The Governance Risk Level is computed by aggregating risk signals from all risk source categories. The aggregation model is as follows:
+
+**Risk Source Categories:**
+- Security Risk: vulnerabilities, threats, active incidents
+- Personnel Risk: key person dependencies, capability gaps, turnover
+- Financial Risk: budget constraints, cost overruns, resource scarcity
+- Legal and Regulatory Risk: compliance gaps, regulatory changes, legal exposure
+- Stakeholder Risk: stakeholder dissatisfaction, enforcement actions, loss of trust
+- Infrastructure Risk: system failures, capacity constraints, technical debt
+- Governance Risk: governance process failures, authority violations, decision quality degradation
+
+**Risk Quantification:** Each risk source category is independently assessed and assigned a numerical value from 0.0 (no risk) to 1.0 (existential risk). The assessment must be based on independently observed evidence, not on self-declared risk assessment.
+
+**Risk Aggregation Formula:**
+
+```
+Governance Risk Level = 1 - ∏(1 - Risk_i)
+
+where Risk_i is the independently observed risk value for each source category
+```
+
+This formula ensures that:
+- A single existential risk (Risk_i = 1.0) produces Governance Risk Level = 1.0 regardless of other categories
+- Multiple moderate risks compound into higher aggregate risk
+- The Governance Risk Level ranges from 0.0 (no risk) to 1.0 (existential risk)
+
+**Risk Weighting:** Each risk source category may be weighted according to the Governing Entity's context and risk profile. The weighting scheme must be:
+- Explicitly documented
+- Independently verified for appropriateness
+- Subject to review at minimum annually
+- Adjusted when the Governing Entity's context changes materially
+
+**Risk Trend Analysis:** In addition to the point-in-time Governance Risk Level, the rate of change of each risk source category is continuously monitored. A risk category that is increasing in value triggers escalation independent of its current absolute value.
+
+### 2.9 The Observation Condition
 
 All four components of the Governance Capacity formula must be Independently Observed to be valid inputs. Self-Declared Values are not valid.
 
@@ -265,7 +364,7 @@ A governance system cannot determine its own Governance Capacity. It can only cr
 
 This has one critical consequence: **a governance system that has not established independent observation infrastructure for each of the four components has Governance Capacity of zero by definition.** Not because the components are necessarily absent — but because without independent observation, their values are unknown and therefore must be treated as zero.
 
-### 2.6 The Cascade Property
+### 2.10 The Cascade Property
 
 When Adaptive Transparency degrades, the degradation tends to propagate through the other components in sequence:
 
@@ -284,7 +383,7 @@ This cascade is not merely correlational. It has a causal mechanism: Adaptive Tr
 
 The Cascade Property establishes that Adaptive Transparency has a special structural role: it is the first link in the governance feedback loop, and its failure initiates cascading failure in all other components. Investment in Adaptive Transparency — particularly in its independence, speed, and coverage — is therefore the highest-leverage governance investment in any system where overall Governance Capacity is below the target level.
 
-### 2.7 The Scale Limit Property
+### 2.11 The Scale Limit Property
 
 The maximum complexity of a governed system is proportional to the independently observed Adaptive Transparency of the Governing Entity:
 
@@ -298,7 +397,7 @@ A governance system that expands its scope without expanding its independent obs
 
 ## 3. The Three Constitutional Conditions
 
-The following three conditions are constitutional requirements binding on all implementations of this specification. They must hold at all times. Violation of any Constitutional Condition is a governance failure that cannot be offset by the values of any other measures.
+The following three conditions are constitutional requirements binding on all implementations of this specification. They must hold at all times. Violation of any Constitutional Condition is a governance failure that cannot be offset by the values of any other governance measures.
 
 ### Constitutional Condition I — The Existence Condition
 
@@ -433,7 +532,7 @@ Centre  =  Human Authority  +  Bounded AI Capability  +  Verified Reality
 
 The Centre is required at Tier 2 and above as defined in Section 30. At Tier 1, a Centre function of equivalent logical structure must exist, scaled to context. No Governing Entity subject to this specification operates without a functioning Centre.
 
-### 6.1 The Six-Layer Architecture
+### 6.1 The Six-Layer Architecture and Execution Cycle
 
 The Centre operates through six functional layers forming a closed-loop system:
 
@@ -471,7 +570,7 @@ The Sense Layer is the Centre's primary interface with reality. It receives:
 
 The Sense Layer passes all inputs through the Reality Integrity Protocol defined in Section 9 before forwarding them to the Verify Layer. Any input that fails Reality Integrity validation is quarantined, logged, and treated as a potential Governance Risk Level increase.
 
-The Sense Layer must be structurally independent of the systems it observes. An observation system that is part of the system it monitors is a self-reporting system, not a Sense Layer. Self-reporting violates the Observation Condition of Section 2.5.
+The Sense Layer must be structurally independent of the systems it observes. An observation system that is part of the system it monitors is a self-reporting system, not a Sense Layer. Self-reporting violates the Observation Condition of Section 2.9.
 
 **AI systems in the Sense Layer:** Primary function for data collection, pattern detection, signal fusion, and early-warning analysis. AI systems in the Sense Layer operate within Bounded Capability for sensing functions only.
 
@@ -488,7 +587,7 @@ The verification process:
 3. Where consistent: Verified Reality is confirmed, the Certification Hash of the verification is recorded, and the verified state passes to the Think Layer
 4. Where inconsistent: the Disagreement Condition activates — the Governance Risk Level is increased, the inconsistency is escalated for investigation, and no decision based on the contested observation is valid until resolution is confirmed
 
-The Verify Layer is the operational implementation of the Observation Condition (Section 2.5). It is the structural mechanism by which Self-Declared Values are excluded from governance decisions.
+The Verify Layer is the operational implementation of the Observation Condition (Section 2.9). It is the structural mechanism by which Self-Declared Values are excluded from governance decisions.
 
 **AI systems in the Verify Layer:** Cross-validation of observations. Detection of fabricated, manipulated, or AI-generated synthetic telemetry. Identification of systematic bias in observation streams. All AI observations in this layer are themselves subject to Adversarial Observer review.
 
@@ -584,6 +683,25 @@ The Centre must satisfy the following properties at all times:
 | Threat detection | Manual trigger | Automated | Real-time | Real-time |
 | Observer verification cycle | Defined | Per decision | Continuous | Continuous |
 
+### 6.5 Centre Response Time Architecture
+
+The Centre's response time requirements are calibrated to the threat timeline and the Governance Capacity margin. The following response time tiers apply:
+
+**Critical Response (< 4 hours):** Applicable to threats that could reduce Governance Capacity below Governance Risk Level within 4 hours if unaddressed. Examples: active security incidents, critical infrastructure failures, legal proceedings with imminent deadlines.
+
+**High Response (< 24 hours):** Applicable to threats that could reduce Governance Capacity below Governance Risk Level within 24 hours if unaddressed. Examples: significant vulnerabilities, personnel emergencies, regulatory compliance deadlines.
+
+**Standard Response (< 72 hours):** Applicable to threats that could reduce Governance Capacity below Governance Risk Level within 72 hours if unaddressed. Examples: medium-severity vulnerabilities, policy violations, process improvements.
+
+**Planned Response (< 30 days):** Applicable to conditions that require governance attention but do not threaten the Sustainability Condition within 30 days. Examples: capability improvements, process optimizations, stakeholder communications.
+
+The Centre's operational design must ensure that response time requirements are met without requiring Human Authority to make decisions faster than human cognitive capacity allows. This is achieved through:
+
+- Pre-authorization of decision classes and execution parameters
+- Automated decision proposal generation for time-critical scenarios
+- Escalation procedures that compress decision cycles without eliminating human review
+- Fallback procedures that activate if Human Authority cannot respond within the required timeframe
+
 ---
 
 ## 7. Operating Modes
@@ -593,6 +711,13 @@ The Governing Entity's operational posture responds to the real-time relationshi
 ### 7.1 Normal State
 
 **Trigger:** Governance Capacity substantially exceeds the Governance Risk Level — a comfortable positive margin
+
+**Margin Definition:** Normal State is triggered when:
+```
+Governance Capacity - Governance Risk Level  ≥  0.3 × Governance Capacity
+```
+
+This ensures a 30% safety margin between current governance capacity and the failure threshold.
 
 **System behaviour:**
 - AI systems assist in all Centre layers within Bounded Capability
@@ -606,6 +731,13 @@ The Governing Entity's operational posture responds to the real-time relationshi
 ### 7.2 Stress State
 
 **Trigger:** Governance Capacity approaches the Governance Risk Level — the Sustainability Condition is at risk but not yet violated
+
+**Margin Definition:** Stress State is triggered when:
+```
+0.1 × Governance Capacity  ≤  (Governance Capacity - Governance Risk Level)  <  0.3 × Governance Capacity
+```
+
+This represents a 10–30% safety margin — the system is approaching the failure threshold.
 
 **System behaviour:**
 - Increased verification frequency — the Verify Layer operates at elevated checking cycles
@@ -621,9 +753,18 @@ Stress State that persists beyond this period without an approved remediation pl
 
 **Structural significance:** Stress State is the most important operating mode for preventing governance collapse. It is where early intervention is most effective. A Governing Entity that detects Stress State and acts decisively can prevent Crisis State. A Governing Entity that does not detect Stress State — because its Adaptive Transparency is insufficient — will typically discover it has been in Stress State only when it has already entered Crisis State. This is the Cascade Property in operation.
 
+**Stress State Duration:** Stress State cannot persist indefinitely. If Stress State persists for more than 30 days without transition to either Normal State or Crisis State, the system is treated as having failed to detect a governance condition and the Governance Risk Level is increased.
+
 ### 7.3 Crisis State
 
 **Trigger:** Governance Capacity falls below the Governance Risk Level — Constitutional Condition I is violated
+
+**Margin Definition:** Crisis State is triggered when:
+```
+Governance Capacity - Governance Risk Level  <  0
+```
+
+The Sustainability Condition is violated.
 
 **System behaviour:**
 - Response Cascade immediately activates (Section 7.4)
@@ -648,6 +789,12 @@ The Response Cascade activates automatically when Crisis State is declared. It p
 **Phase 3 — Containment:** Actions to prevent the Governance Risk Level from growing further while correction is underway. Includes scope restrictions, suspension of expansion activities, and stabilisation measures.
 
 **Phase 4 — Reconstruction:** Structural restoration of the conditions that allowed Governance Capacity to fall below the Governance Risk Level. Reconstruction addresses the structural cause of the failure, not its surface manifestation. The structural cause is always one of: Fidelity decay, Capacity to Act failure, Institutional Integrity erosion, or Adaptive Transparency degradation. Reconstruction must demonstrate, through Independent Observation, that the structural cause has been addressed and the component in question has been restored above the Minimum Viability Floor.
+
+**Crisis State Exit:** Crisis State is exited only when:
+1. Governance Capacity is independently observed to exceed Governance Risk Level
+2. The Oversight Body confirms that the structural cause has been addressed
+3. Phase 4 (Reconstruction) is complete
+4. A 30-day stability period has passed with Governance Capacity continuously exceeding Governance Risk Level
 
 ---
 
@@ -708,7 +855,24 @@ Every telemetry input, observation, and governance signal processed by the Centr
 - Any break in the signature chain produces a verification failure, which is treated as a potential Reality Fabrication attack and triggers a Governance Risk Level increase
 - Observations without verifiable Cryptographic Provenance are quarantined from the governance decision process and logged as anomalies
 
-### 9.3 Origin Authentication
+### 9.3 Cryptographic Key Architecture
+
+**Key Generation:** All cryptographic keys used for observation signing are generated within Hardware Security Modules or equivalent tamper-resistant hardware. Keys are never generated on general-purpose computing systems.
+
+**Key Storage:** Private keys used for observation signing are stored exclusively in Hardware Security Modules. Private keys never exist in unencrypted form outside Hardware Security Modules.
+
+**Key Access Control:** Access to private keys requires multi-party authorisation. No single individual can access a private key without the authorisation of at least one other individual. Multi-party access is logged and auditable.
+
+**Key Rotation:** Cryptographic keys are rotated at defined intervals (minimum annually, more frequently for high-risk observation sources). Key rotation is performed without disrupting observation continuity.
+
+**Key Compromise Recovery:** If a private key is suspected to be compromised, the following procedure activates:
+1. The compromised key is immediately revoked
+2. A new key is generated and deployed
+3. All observations signed with the compromised key are flagged for re-verification
+4. The incident is logged and escalated to the Oversight Body
+5. A root-cause analysis is conducted to determine how the compromise occurred
+
+### 9.4 Origin Authentication
 
 Before an observation is admitted to the Verify Layer, the Integrity Protocol confirms:
 
@@ -719,17 +883,18 @@ Before an observation is admitted to the Verify Layer, the Integrity Protocol co
 
 Failure of any origin authentication check triggers the same response as Cryptographic Provenance failure: quarantine, logging, and Governance Risk Level increase.
 
-### 9.4 Synthetic Observation Detection
+### 9.5 Synthetic Observation Detection
 
 In addition to Cryptographic Provenance, the Integrity Protocol operates AI-native analysis specifically designed to detect the signatures of synthetically generated or AI-manipulated observations:
 
 - Cross-correlation of independent observation streams for implausible consistency — authentic observations of the same system typically exhibit natural variance; artificially generated observations may be overly consistent
 - Temporal pattern analysis — real systems exhibit characteristic timing patterns; synthetic observations may not replicate these correctly
 - Semantic coherence checking — observations from different systems should be semantically consistent; Reality Fabrication attacks that manipulate multiple streams simultaneously may produce semantic inconsistencies across streams
+- Statistical anomaly detection — observations that are statistically normal but semantically impossible are flagged for investigation
 
 Synthetic observation detection findings are forwarded to the Adversarial Observer function and treated as Disagreement Condition triggers.
 
-### 9.5 Integrity Protocol Independence
+### 9.6 Integrity Protocol Independence
 
 The Integrity Protocol itself must be independent of the systems it monitors. It must be:
 
@@ -757,7 +922,21 @@ The Intelligence Function continuously:
 - Constructs test exploitation scenarios to confirm whether identified vulnerabilities are actually exploitable in the Governing Entity's specific configuration
 - Monitors for newly published vulnerability information and immediately assesses whether it applies to the Governing Entity's systems
 
-### 10.3 AI-Speed Response
+### 10.3 Coverage and Scope
+
+The Intelligence Function must maintain continuous coverage of:
+
+- All governance-critical software and infrastructure components
+- All external-facing interfaces and APIs
+- All data processing pipelines and storage systems
+- All identity and access control systems
+- All cryptographic infrastructure
+- All Centre layer components
+- All integration points between disciplines
+
+Coverage is measured as the percentage of the Governing Entity's systems that are actively analysed by the Intelligence Function. Minimum coverage is 95% of systems classified as governance-critical or operational. Systems not covered by the Intelligence Function are treated as governance gaps and trigger a Governance Risk Level increase.
+
+### 10.4 AI-Speed Response
 
 Findings from the Intelligence Function bypass standard change advisory processes for critical-severity vulnerabilities. The response timeline requirements are:
 
@@ -770,13 +949,36 @@ Findings from the Intelligence Function bypass standard change advisory processe
 
 "Active mitigation" means either a verified patch deployed to the affected system or a verified compensating control in place that eliminates the exploitability of the vulnerability. Acknowledging the finding does not constitute active mitigation.
 
-### 10.4 Independence Requirements
+### 10.5 Intelligence Function Automation
+
+The Intelligence Function operates continuously without human intervention. However, the following functions require human review and authorisation:
+
+- Decisions to deploy patches or compensating controls to production systems
+- Decisions to accept residual risk for vulnerabilities that cannot be immediately mitigated
+- Decisions to modify Intelligence Function parameters or coverage scope
+- Decisions to change the severity classification of vulnerability categories
+
+Human review of Intelligence Function findings must occur within the response time windows defined in Section 10.4.
+
+### 10.6 Independence Requirements
 
 The Intelligence Function must be operationally independent of the systems it analyses. Personnel responsible for the systems being analysed must not have authority to suppress, delay, or modify Intelligence Function findings before they are reviewed by governance oversight. All findings are logged directly to the Memory Layer before any review process.
 
-### 10.5 Intelligence Function Validation
+### 10.7 Intelligence Function Validation
 
 The Intelligence Function itself is subject to adversarial testing. An independent external function must periodically verify that the Intelligence Function is operating correctly by introducing known vulnerabilities into isolated test environments and confirming that the Intelligence Function detects them within the required timeframes.
+
+Validation testing must occur at minimum quarterly. Validation results are logged in the Memory Layer and reported to the Oversight Body.
+
+### 10.8 False Positive Management
+
+The Intelligence Function may generate false positive findings — vulnerabilities that are reported but do not actually exist or are not actually exploitable. The following procedures apply:
+
+**False Positive Detection:** When a reported vulnerability is investigated and found to be a false positive, the finding is logged as such in the Memory Layer.
+
+**False Positive Rate Tracking:** The Intelligence Function's false positive rate is continuously tracked. If the false positive rate exceeds 5%, the Intelligence Function parameters are reviewed and adjusted.
+
+**False Positive Impact:** False positives do not reduce the priority of genuine findings. All findings are treated as genuine until investigation confirms otherwise.
 
 ---
 
@@ -795,7 +997,27 @@ The Cryptography Standard applies to:
 - All Identity Assurance Level 3 and Level 4 authentication functions
 - All software signing and artefact integrity verification
 
-### 11.2 Cryptographic Agility
+### 11.2 Cryptographic Algorithm Selection
+
+The Cryptography Standard specifies the following algorithms as approved for governance-critical applications:
+
+**Asymmetric Cryptography (Digital Signatures):**
+- CRYSTALS-Dilithium (primary)
+- FALCON (alternative)
+- SPHINCS+ (fallback)
+
+**Symmetric Cryptography (Encryption):**
+- AES-256 (approved until Post-Quantum symmetric algorithms are standardised)
+
+**Hash Functions:**
+- SHA-3-256 (approved until Post-Quantum hash functions are standardised)
+
+**Key Derivation:**
+- SHAKE-256 (approved until Post-Quantum KDF algorithms are standardised)
+
+All implementations must use only approved algorithms. Use of non-approved algorithms for governance-critical functions is a governance failure.
+
+### 11.3 Cryptographic Agility
 
 The governance cryptographic infrastructure must support algorithm migration without disrupting governance continuity. When a cryptographic algorithm is identified as compromised or below-standard:
 
@@ -805,7 +1027,9 @@ The governance cryptographic infrastructure must support algorithm migration wit
 - The transition is completed within the period defined by the severity of the compromise assessment
 - All transition activities are logged in the Memory Layer
 
-### 11.3 Key Management
+Algorithm migration must not disrupt the Sustainability Condition. The Governing Entity must maintain the capability to verify records signed with both the old and new algorithms during the migration period.
+
+### 11.4 Key Management
 
 - All cryptographic keys used in governance-critical functions are generated within Hardware Security Modules or equivalent tamper-resistant hardware
 - Private keys used for governance record signing never exist outside tamper-resistant hardware
@@ -813,7 +1037,7 @@ The governance cryptographic infrastructure must support algorithm migration wit
 - Key revocation can be executed within one hour of authorisation
 - Emergency re-keying of the entire governance cryptographic infrastructure must be executable within four hours without disrupting governance continuity
 
-### 11.4 Cryptographic Integrity of the Centre
+### 11.5 Cryptographic Integrity of the Centre
 
 The Centre's own software and infrastructure is subject to continuous cryptographic integrity verification:
 
@@ -1041,6 +1265,11 @@ Privileged access requirements:
 - Identity deprovisioning is automated upon termination of the relationship that justified the identity
 - Dormant identities — those not used within the defined dormancy period — are detected and disabled automatically
 - The complete identity register is reconciled against authoritative personnel records at defined intervals
+
+---
+
+# Governance Operations Specification
+## Final v0.9 — Sections 16-35
 
 ---
 
@@ -1280,7 +1509,7 @@ The governance-function disciplines operationalize governance authority, legal c
 - A Risk Registry maintained in the Memory Layer that identifies all known and potential sources of Governance Risk Level increase
 - Continuous collection of risk signals from all operational disciplines
 - Automated computation of Governance Capacity using the formula in Section 2.2, with all four components independently observed
-- Automated computation of Governance Risk Level using a defined aggregation model that weights all risk sources
+- Automated computation of Governance Risk Level using the aggregation model defined in Section 2.8
 - Continuous comparison of Governance Capacity to Governance Risk Level to detect transitions between Normal State, Stress State, and Crisis State
 - Automated escalation to the Centre's Risk Engine when Governance Capacity approaches or falls below Governance Risk Level
 - Risk assessment for every governance decision, included in the Decision Contract
@@ -1417,7 +1646,7 @@ AIOps consolidates:
 - **Trend Analysis:** Long-term trends in all observability domains are computed and reported to the Risk Engine
 - **Predictive Modeling:** Future states are modeled based on current trends and risk factors
 - **Cross-Domain Correlation:** Patterns across multiple observability domains are detected
-- **Synthetic Observation Detection:** AI-generated or manipulated observations are detected using the techniques defined in Section 9.4
+- **Synthetic Observation Detection:** AI-generated or manipulated observations are detected using the techniques defined in Section 9.5
 - **Observability Completeness:** All systems within the scope of the Governing Entity's authority are within AIOps' observational coverage
 
 ### 19.5 AIOps Outputs
@@ -1568,6 +1797,13 @@ When any discipline fails, the failure propagates through the orchestration matr
 **Operating Mode Transition:** If the cascading failures cause Governance Capacity to fall below Governance Risk Level, the system transitions to Stress State or Crisis State.
 
 **Response Cascade Activation:** If Crisis State is entered, the Response Cascade activates, which includes Phase 2 (Correction) focused on restoring the failing discipline.
+
+**Failure Recovery Procedures:** Each discipline maintains documented procedures for:
+- Detecting its own failure
+- Entering a safe state when failure is detected
+- Notifying downstream consumers of the failure
+- Accepting fallback inputs from backup sources if available
+- Resuming normal operation when the failure is resolved
 
 ### 20.7 Discipline Interdependency Map
 
@@ -1790,7 +2026,7 @@ The governance system may improve through sanctioned Meta-Evolution any aspect o
 
 ### 24.3 What Cannot Be Changed Through Meta-Evolution
 
-The following cannot be altered through any Meta-Evolution process, regardless of the authority of those proposing the change:
+The following cannot be altered through any Meta-Evolution process, regardless of of the authority of those proposing the change:
 
 - **The three Constitutional Conditions** (Section 3) — these represent the irreducible minimum definition of governance under this specification
 - **The Governance Capacity formula** (Section 2.2) — the multiplicative structure, the four components, and the Sustainability Condition
@@ -1878,6 +2114,24 @@ Three Execution Tiers govern the level of human involvement required for any gov
 
 The authority to upgrade a decision's Execution Tier to a more restrictive level (for example, from Autonomous to Hybrid) rests with any authority holder in the decision chain. The authority to downgrade a decision's Execution Tier to a less restrictive level requires the approval of the authority that approved the original Decision Contract.
 
+### 25.6 Human Authority Response Time Requirements
+
+Human Authority must be available to make governance decisions within the response time windows defined by the Centre's performance requirements (Section 6.4). The following provisions ensure this is achievable:
+
+**Pre-Authorization:** Human Authority may pre-authorize decision classes and execution parameters for time-critical scenarios. Pre-authorization establishes decision criteria that, if met, permit automated approval without requiring real-time human review.
+
+**Escalation Compression:** For decisions that cannot be pre-authorized, the decision approval cycle is compressed through:
+- Automated Decision Proposal generation that presents only the most critical information
+- Structured presentation formats that enable rapid human review
+- Clear recommendation from the Think Layer with risk assessment
+- Authority to approve or reject with minimal deliberation time
+
+**Fallback Procedures:** If Human Authority cannot respond within the required timeframe:
+- The decision escalates to the next level of authority
+- If no authority can respond within the timeframe, the decision escalates to the Oversight Body
+- The Oversight Body has authority to make time-critical decisions in the absence of responsive Human Authority
+- All fallback decisions are logged and subject to post-incident review
+
 ---
 
 ## 26. Observability
@@ -1908,15 +2162,37 @@ Beyond technical observability, five governance observability domains must be co
 
 **Stakeholder telemetry:** Independently observed signals of stakeholder welfare — the primary operational expression of the Fidelity component. Stakeholder telemetry is not a secondary input; it is a primary governance signal. A Sense Layer that treats stakeholder feedback as lower priority than system metrics has inverted the governance priority order.
 
-### 26.3 The Three-Observer Rule
+### 26.3 The Three-Observer Rule and Observer Independence
 
 All governance-critical observations must be produced simultaneously by three structurally independent observer types. The three types are:
 
-**Internal Observer:** Operates within the Governing Entity's own infrastructure. Necessary but insufficient alone — subject to capture, manipulation, and the Reality Fabrication threat.
+**Internal Observer:** Operates within the Governing Entity's own infrastructure. Necessary but sufficient alone — subject to capture, manipulation, and the Reality Fabrication threat.
 
-**External Observer:** Operates independently of the Governing Entity's infrastructure, is not funded or directed by the Governing Entity, and whose observations the Governing Entity cannot suppress or modify. The External Observer provides the primary check on Internal Observer integrity.
+**External Observer:** Operates independently of the Governing Entity's infrastructure, is not funded or directed by the Governing Entity, and whose observations the Governed Entity cannot suppress or modify. The External Observer provides the primary check on Internal Observer integrity.
 
 **Adversarial Observer:** Actively attempts to find discrepancies in the observations made by the Internal and External Observers. The Adversarial Observer does not assume observations are correct — it attempts to disprove them. The Adversarial Observer is the primary check on both internal and external observation integrity, and the primary defence against Coordinated Multi-Node Deception.
+
+**Observer Independence Criteria:**
+
+*Internal Observer Independence:* The Internal Observer must be:
+- Structurally separate from the systems being observed
+- Staffed by personnel without operational responsibility for the observed systems
+- Reporting to a governance authority rather than an operational authority
+- Subject to regular rotation to prevent capture
+
+*External Observer Independence:* The External Observer must be:
+- Funded by a source independent of the Governing Entity
+- Staffed by personnel with no employment relationship to the Governing Entity
+- Capable of conducting observations without the Governing Entity's cooperation
+- Able to publish findings without the Governing Entity's approval
+- Protected from retaliation by the Governing Entity
+
+*Adversarial Observer Independence:* The Adversarial Observer must be:
+- Staffed by personnel with security expertise and adversarial mindset
+- Equipped with tools and techniques equivalent to those available to adversaries
+- Authorized to attempt to break or circumvent the systems being observed
+- Operating under rules of engagement that permit aggressive testing
+- Reporting findings directly to governance authority without operational filtering
 
 **The Disagreement Rule:**
 
@@ -1931,14 +2207,41 @@ of the same governance reality:
 
 Disagreement is not resolved by averaging. Disagreement is not resolved by deferring to the Internal Observer. Disagreement is a governance signal: it indicates that the governance system's knowledge of its own state is unreliable. That unreliability must be investigated and resolved before governance decisions that depend on the contested observation are made.
 
-### 26.4 Audit Record Integrity
+### 26.4 Observer Qualification and Selection
 
-All governance records required by this specification must be:
+**Observer Qualification:**
 
-- Stored in tamper-resistant structures with Certification Hashes enabling verification of non-alteration
-- Retained for a period defined by the Governing Entity based on its accountability obligations — minimum retention periods reflect the longest potential investigation or review timeline
-- Accessible to the Oversight Body without modification by operational personnel
-- Independently verifiable for integrity — the verification process must be available to the Oversight Body without requiring the cooperation of operational personnel
+Internal Observers must demonstrate:
+- Technical competence in the systems being observed
+- Understanding of governance requirements
+- Absence of conflicts of interest with operational personnel
+- Commitment to independent observation principles
+
+External Observers must demonstrate:
+- Relevant expertise in the domain being observed
+- Track record of independent analysis
+- Financial stability and independence
+- Absence of conflicts of interest with the Governing Entity
+
+Adversarial Observers must demonstrate:
+- Advanced security expertise
+- Proven ability to discover vulnerabilities
+- Understanding of governance requirements
+- Commitment to ethical adversarial practices
+
+**Observer Selection:**
+
+- Internal Observers are selected by the Oversight Body, not by operational management
+- External Observers are selected through a competitive process with Oversight Body approval
+- Adversarial Observers are selected by the Oversight Body from qualified security professionals
+- Observer selection is documented and subject to audit
+
+**Observer Rotation:**
+
+- Internal Observers are rotated at minimum annually
+- External Observers are rotated at minimum every three years
+- Adversarial Observers are rotated at minimum semi-annually
+- Rotation is staggered to maintain continuity of observation
 
 ### 26.5 Governance Capacity Computation
 
@@ -1948,6 +2251,24 @@ The Governance Capacity calculation must be computable from Independently Observ
 - The computation is auditable — the inputs, the computation method, and the result are all logged in the Memory Layer
 - The computation is reproducible — given the same inputs, the same result is always produced
 - The computation is transparent — the Oversight Body can access the inputs, the method, and the result at any time
+
+**Governance Capacity Computation Procedure:**
+
+1. **Component Measurement:** Each of the four components (Fidelity, Capacity to Act, Institutional Integrity, Adaptive Transparency) is independently measured by at least two observer types
+2. **Component Aggregation:** Where multiple independent measurements exist, the minimum value is used (per Section 2.5)
+3. **Formula Application:** The four component values are multiplied together: GC = F × CA × II × AT
+4. **Result Logging:** The computation inputs, method, timestamp, and result are logged in the Memory Layer with a Certification Hash
+5. **Transparency:** The result is made available to all authorized stakeholders, including the Oversight Body
+
+**Governance Capacity Confidence Interval:**
+
+Because component measurements may have uncertainty, the Governance Capacity calculation includes a confidence interval:
+
+```
+Governance Capacity = (F × CA × II × AT) ± confidence_interval
+```
+
+The confidence interval reflects the combined measurement uncertainty of all four components. Governance decisions that depend on Governance Capacity values near the Governance Risk Level threshold must account for this uncertainty.
 
 ---
 
@@ -2127,7 +2448,7 @@ The Governing Entity must maintain and independently observe the following condi
 
 **Non-Retaliation:** Stakeholders who assert or support governance accountability proceedings must be protected from any form of retaliation by the Governing Entity, including through indirect means.
 
-**Suppression of any of these conditions by the Governing Entity is itself a governance failure.** It is a failure of the Adaptive Transparency component — the governance system is actively suppressing the feedback signals that would detect its own failures. The Cascade Property (Section 2.6) predicts the consequences.
+**Suppression of any of these conditions by the Governing Entity is itself a governance failure.** It is a failure of the Adaptive Transparency component — the governance system is actively suppressing the feedback signals that would detect its own failures. The Cascade Property (Section 2.10) predicts the consequences.
 
 ### 29.3 The Inverse Capacity Principle
 
@@ -2164,6 +2485,29 @@ Every Governing Entity at Tier 3 and above must establish a functioning External
 
 A Tier 3 Governing Entity without a functioning External Escalation Pathway does not satisfy the enforcement architecture requirements of this specification.
 
+### 29.6 Retaliation Detection and Prevention
+
+The Governing Entity must implement mechanisms to detect and prevent retaliation against Stakeholders who assert governance failures:
+
+**Retaliation Definition:** Retaliation includes:
+- Direct punishment (termination, legal action, financial penalty)
+- Indirect consequences (reduced opportunities, social stigma, exclusion from benefits)
+- Chilling effects (creating fear that assertion will result in negative consequences)
+- Obstruction (preventing Stakeholders from accessing information or representation)
+
+**Retaliation Detection:** The SocietalOps Discipline continuously monitors for:
+- Patterns of negative consequences following governance failure assertions
+- Stakeholder reports of retaliation
+- Systematic exclusion of assertive Stakeholders from opportunities
+- Suppression of information or representation
+
+**Retaliation Response:** When retaliation is detected:
+- The incident is immediately escalated to the Oversight Body
+- Interim protection is provided to the affected Stakeholder
+- The Governance Risk Level is increased
+- A formal investigation is conducted
+- Corrective action is taken to restore the Stakeholder's position
+
 ---
 
 ## 30. Scalability and Maturity
@@ -2187,11 +2531,11 @@ Five maturity levels define the depth of governance embedding. Scale and maturit
 |---|---|---|
 | Level 1 | Initial | Governance exists as policy documents. Enforcement is manual and inconsistent. No Centre. Governance Capacity not computed. Three Constitutional Conditions not continuously monitored. |
 | Level 2 | Defined | Governance processes documented and followed. Logical Centre function operational. Governance Capacity computable on demand. Basic identity and access controls. |
-| Level 3 | Managed | Centre operational with Independent Observation infrastructure. Governance Capacity monitored continuously. Stress State detectable. Reality Integrity Protocol deployed. Three-Observer Rule operational. THIS IS THE KEY TRANSITION. |
+| Level 3 | Managed | Centre operational with Independent Observation infrastructure. Governance Capacity monitored continuously. Stress State detectable. Reality Integrity Protocol deployed. Three-Observer Rule operational. |
 | Level 4 | Integrated | All Constitutional Conditions continuously verified. All three operating modes functional and automatically triggered. Full machine adversarial defence operational. Formal Correctness applied to governance-critical software. Formal Abstraction Layer complete. |
 | Level 5 | Self-Sustaining | Centre self-aware and self-monitoring. Crisis State triggers automatic Response Cascade initiation. Continuous Adversarial Intelligence operating at full capacity. Post-Quantum Cryptography migration complete. All formal correctness requirements met. Machine-Readable Protocol Layer fully deployed. Meta-Evolution Control operational. |
 
-**The Level 3 transition is the most structurally significant event in the implementation of this specification.** Below Level 3, all Governance Capacity component values are Self-Declared — they are not independently observed. Under the Observation Condition (Section 2.5), Self-Declared values are not valid inputs to the Governance Capacity formula. Below Level 3, a Governing Entity's Governance Capacity is formally zero — not because the components are necessarily absent, but because their values cannot be independently verified.
+**The Level 3 transition is the most structurally significant event in the implementation of this specification.** Below Level 3, all Governance Capacity component values are Self-Declared — they are not independently observed. Under the Observation Condition (Section 2.9), Self-Declared values are not valid inputs to the Governance Capacity formula. Below Level 3, a Governing Entity's Governance Capacity is formally zero — not because the components are necessarily absent, but because their values cannot be independently verified.
 
 Level 3 is the threshold at which governance becomes real rather than documented.
 
@@ -2207,8 +2551,6 @@ Level 3 is the threshold at which governance becomes real rather than documented
 ---
 
 ## 31. Implementation Roadmap
-
-The **foundational construct* forming the core operational backbone must first be designed, established, built, tested and finalized to ensure it seamlessly scale and accommodate succeeding infrastructures, functions and features as adoption and deployment of GovOps system progresses.
 
 ### Phase 1 — Governance Foundation (Months 1–6)
 
@@ -2312,7 +2654,9 @@ Formal representations must exist for:
 
 **Verification logic:** The formal expression of the Multi-Observer Verification process and the Disagreement Condition — expressed as a state machine that transitions between verified, disputed, and unverified states based on observer inputs.
 
-**Anti-fragility metrics:** The formal expression of the indicators that demonstrate the governance system is improving under stress rather than degrading — expressed as measurable properties of the governance system's performance over time.
+**Constitutional Conditions:** The formal expression of the three Constitutional Conditions — expressed as invariants that must hold at all times.
+
+**Governance Capacity formula:** The formal expression of the Governance Capacity calculation — expressed as a mathematical formula with defined inputs and outputs.
 
 ### 32.3 Purpose
 
@@ -2577,6 +2921,32 @@ Every Federation Agreement must define:
 - **Withdrawal Conditions:** Under what conditions a member entity may withdraw from the federation
 - **Dispute Resolution:** How conflicts between member entities are resolved
 
+### 34.8 Shared Risk Signalling
+
+Federation members must maintain a continuous shared risk signalling mechanism that communicates Governance Risk Level changes across federation boundaries:
+
+**Risk Signal Format:** Risk signals are expressed in the GovOps Protocol and include:
+- The signalling member entity's identifier
+- The current Governance Risk Level of the signalling entity
+- The rate of change of Governance Risk Level
+- The primary risk source categories
+- The operating mode of the signalling entity
+
+**Risk Signal Frequency:** Risk signals are transmitted:
+- Continuously when operating in Stress State or Crisis State
+- At minimum hourly when operating in Normal State
+- Immediately upon transition between operating modes
+
+**Risk Signal Verification:** Receiving members verify risk signals through:
+- Cryptographic signature verification
+- Consistency checking against prior signals
+- Independent assessment of whether the signalled risk level is plausible
+
+**Risk Signal Response:** When a member receives a risk signal indicating another member is in Crisis State:
+- The receiving member assesses whether the crisis affects its own Governance Capacity
+- If affected, the receiving member escalates to its own Risk Engine
+- The receiving member may offer support through the Federation Governance Body
+
 ---
 
 ## 35. Glossary
@@ -2585,13 +2955,13 @@ Every Federation Agreement must define:
 |---|---|
 | **Accountability** | The obligation of an authority holder to answer for the use of authority. Accountability cannot be transferred. |
 | **Adaptive Transparency** | The independently observed capacity of a governance system to detect changes in its environment and its own internal state, understand their implications, adapt its behaviour in response, and remain observable to those it governs throughout. One of the four components of Governance Capacity. |
-| **Adversarial Base Assumption** | The operational posture that treats all inputs, actors, and systems as potentially adversarial by default. This is not a security configuration — it is the correct epistemic position for any governance system operating in an environment where adversaries exist. The Adversarial Base Assumption does not prevent cooperation; it requires that cooperation be verified rather than assumed. |
+| **Adversarial Base Assumption** | The operational posture that treats all inputs, actors, and systems as potentially adversarial by default. This is not a security configuration — it is the correct epistemic position for any governance system operating in an environment where adversaries exist. |
 | **Adversarial Observer** | An independent observer whose function is to actively seek to discover discrepancies, fabrications, or failures in the observations made by other observers. |
 | **AI System** | Any automated system that uses machine learning, statistical inference, or similar computational techniques to generate outputs without direct human generation of each output. |
 | **AIOps Discipline** | Consolidated observability, monitoring, and intelligent analysis discipline that operationalizes continuous governance observability. |
 | **Authority** | The formally conferred right to take a defined class of action or make a defined class of decision within a governed system. Authority is always bounded. |
 | **Bounded Capability** | The operational scope assigned to an AI system within which it may act autonomously. Any action outside Bounded Capability requires human approval before execution. |
-| **Capacity to Act** | The independently observed structural ability of the governance system to make decisions, enforce them, and produce observable effects on the governed system. One of the four components of Governance Capacity. |
+| **Capacity to Act** | The independently observed structural ability of the governance system to make decisions and produce observable effects on the governed system. One of the four components of Governance Capacity. |
 | **Cascade Property** | The causal mechanism by which Adaptive Transparency degradation initiates sequential degradation of all other Governance Capacity components. |
 | **Certification Hash** | A cryptographic digest of a governance record, produced by a defined algorithm, enabling subsequent verification that the record has not been altered. |
 | **Centre** | Governance Operations Centre — the mandatory operational brain of this specification. The mechanism through which governance moves from defined requirement to continuous operational reality. |
@@ -2637,7 +3007,7 @@ Every Federation Agreement must define:
 | **Minimum Viability Floor** | The lowest value of any Governance Capacity component below which the component is treated as structurally absent. When any component falls below this floor, Governance Capacity is zero regardless of other components. |
 | **Multi-Observer Verification** | The process of collecting observations of the same governance reality from three independent observer types — Internal, External, and Adversarial — simultaneously and comparing them for consistency. |
 | **Normal State** | The operating condition when Governance Capacity substantially exceeds the Governance Risk Level. |
-| **Observation Condition** | All Governance Capacity components must be Independently Observed; Self-Declared values are invalid. |
+| **Observation Condition** | All four components of the Governance Capacity formula must be Independently Observed; Self-Declared values are invalid. |
 | **Operational Tier** | One of four scale contexts (Tier 1–4) that determine which disciplines must be operated independently versus consumed as shared services. |
 | **Oversight Body** | An independent body with authority to investigate, declare, and require remedy of governance failures. Must be structurally independent of the Governing Entity it oversees. |
 | **PolicyOps Discipline** | Operationalizes governance policy as executable code, ensuring automatic enforcement rather than manual interpretation. |
@@ -2662,7 +3032,7 @@ Every Federation Agreement must define:
 | **Weakest-Link Property** | The product of the four Governance Capacity components is dominated by the smallest component. Investment priority: fix the weakest first. |
 | **Zero-Trust Architecture** | A security design principle requiring that no actor, system, or network connection is trusted by default. Every access request is verified independently. |
 
-------
+---
 
 **END OF GOVERNANCE OPERATIONS SPECIFICATION v0.9**
 
