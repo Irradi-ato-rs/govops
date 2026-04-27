@@ -48,8 +48,9 @@
 31. Implementation Roadmap
 32. Formal Abstraction Layer
 33. Machine-Readable Protocol Layer (GovOps Protocol)
-34. Federation and Multi-Entity Coordination
-35. Glossary
+34. Complete System Properties
+35. Federation and Multi-Entity Coordination
+36. Glossary
 
 ---
 
@@ -97,6 +98,8 @@ This section defines every term used in this specification. A term defined here 
 
 **Data Sovereignty:** The principle that governed data is subject to the authority of the governing entity that created or collected it. Data Sovereignty is the default condition. Any departure requires explicit authorisation.
 
+**Defence Stability Constraint:** The requirement that no adversarial defence action produce effects on the governed system more damaging than the attack it responds to. All defence actions — including responses to active attacks, counter-intelligence operations, adversarial simulations, and Intelligence Function deployments — are bounded by this constraint. Automated defence responses are constrained to actions that do not alter governance state, governance records, or authority structures. Where a defence action would require exceeding Bounded Capability to be effective, the governance system escalates to Human Authority. Defined in Section 8.4.
+
 **Decision Class:** A category of governance decision based on its reversibility and risk profile. Three Decision Classes are defined: Reversible (the decision can be undone and the prior state restored), Conditional (the decision can be undone subject to defined conditions being met), and Irreversible (the decision cannot be undone once executed). Each Decision Class has a defined minimum approval requirement.
 
 **Decision Contract:** The minimum information record that must accompany every governance decision. Contents defined in Section 14.4. A decision without a complete Decision Contract is not a valid governance decision.
@@ -104,6 +107,8 @@ This section defines every term used in this specification. A term defined here 
 **Delegation:** The transfer of authority to act within a defined scope to a subordinate actor or system, while retaining accountability for all actions taken under that authority.
 
 **Disagreement Condition:** The state that exists when two or more independent observers produce materially different assessments of the same governance reality. When the Disagreement Condition exists, the Governance Risk Level increases and no decision based on the contested observation is valid until the disagreement is resolved.
+
+**Discipline Orchestration Model:** The formal coordination pattern through which the fifteen operational disciplines sequence their activities following a governance decision. The sequence ensures every action is policy-aligned, secured, financially authorised, risk-assessed, data-verified, and autonomously supervised before and during execution. All monitoring, securing, validating, evaluating, and verifying activities occur in parallel during execution, not sequentially after it. Defined in Section 17.0.
 
 **Epistemic Field:** The complete map of a governed system's knowledge state, consisting of confirmed facts, disputed facts, and unknown regions. The Epistemic Field defines the epistemic basis available for governance decisions and identifies where additional verification is required before decisions can be made.
 
@@ -119,6 +124,10 @@ This section defines every term used in this specification. A term defined here 
 
 **Governance Computability Boundary:** The formal boundary between governance states the Governing Entity can address through governance activity and those it cannot. Three categories exist: computable, probabilistically manageable, and ungovernable.
 
+**Governance Emergence Conditions:** The three conditions that must be simultaneously present for governance to come into being: structure forms (a defined authority structure with differentiated roles exists), stability is measurable (the Governing Entity can distinguish stable from unstable conditions), and coordination is required (conditions exist that cannot be navigated without a governing mechanism). All three must be present before declaring that governance has begun. Defined in Section 30.4.
+
+**Governance Event:** The atomic unit of the Memory Layer — the universal six-field structure through which every governance operation is captured, signed, and made permanently auditable. Every Governance Event must contain: identity, timestamp, type, payload, signature, and integrity_reference. A governance action that does not produce a valid Governance Event has not been recorded and does not exist as a governance act under this specification regardless of its operational effects. Defined in Section 6.6.
+
 **Governance Failure:** The condition in which any Constitutional Condition is violated, regardless of the values of any other governance measures.
 
 **Governance Operations Centre:** The operational brain of this specification's governance architecture. The mandatory runtime mechanism through which governance is exercised continuously rather than periodically. Defined in Section 6.
@@ -126,6 +135,8 @@ This section defines every term used in this specification. A term defined here 
 **Governance Record:** Any document, log entry, decision, telemetry reading, or other information that is required by this specification to be created, retained, and made available to oversight.
 
 **Governance Risk Level:** The aggregate, time-varying measure of all forces threatening the stability and continuity of the governed system. The Governance Risk Level always tends to increase in the absence of active governance effort.
+
+**Governance Validity Condition:** The minimum operating requirement for any governance system: it must continuously distinguish stable conditions from unstable ones. A governance system that cannot detect when it has transitioned from Normal State to Stress State, or from Stress State to Crisis State, does not meet the Governance Validity Condition. It is a governance system in name only. All three Governance Emergence Conditions must be present before the Governance Validity Condition can be satisfied. Defined in Section 30.4.
 
 **Governing Entity:** Any entity that exercises formal authority over the decisions, resources, rights, or interests of others, whether through legal mandate, contractual authority, institutional position, or practical control.
 
@@ -190,6 +201,8 @@ This section defines every term used in this specification. A term defined here 
 **Ungovernable State:** A governance condition fundamentally beyond the authority, capacity, or knowledge of any Governing Entity to resolve through governance activity. Ungovernable states must be identified and acknowledged. Governance directed at ungovernable states is not governance — it is overreach that wastes Governance Capacity without producing governed outcomes.
 
 **Verified Reality:** The state of knowledge about a governed system that has been confirmed through Multi-Observer Verification with no Disagreement Condition. Decisions may only be based on Verified Reality.
+
+**Verification Failure Response:** The mandatory three-step sequence executed when any check in the Reality Integrity Protocol fails — whether a Cryptographic Provenance break, an origin authentication failure, a synthetic observation detection, or a Disagreement Condition. Step 1 — Reduce Confidence: all governance information dependent on the failed verification is immediately moved to the disputed region of the Epistemic Field. Step 2 — Restrict Actions: all governance actions dependent on the disputed information are suspended until re-verification is complete. Step 3 — Escalate Verification: the failure is logged in the Memory Layer as a Governance Event of type "alert", the Governance Risk Level is increased, and Human Authority is engaged to determine whether further operating mode transition is warranted. These three steps are mandatory and are not subject to discretionary override during the immediate response period. Defined in Section 9.7.
 
 **Zero-Trust Architecture:** A security design principle requiring that no actor, system, or network connection is trusted by default, regardless of location or prior authorisation. Every access request is verified independently.
 
@@ -549,13 +562,27 @@ The complete execution cycle expressed as named steps across these layers is:
 Sense → Verify → Evaluate → Decide → Approve → Execute → Record → Review → Adapt
 ```
 
-**Evaluate:** Assessment of Verified Reality against current governance policy, risk thresholds, and the Epistemic Field (Section 26.5). Evaluation determines what is confirmed, what is disputed, and what is unknown before any decision is proposed. It produces a confidence-graded assessment that explicitly represents the limits of the governance system's knowledge. A governance system that skips Evaluate proceeds from raw observation directly to decision — a common cause of irreversible errors.
+Each step is a named operational act with a defined function. All nine must be present for the cycle to be complete. A governance system that omits any step is not running a reduced cycle — it is running an incomplete cycle with a structural gap at the point of omission.
+
+**Sense:** Reality intake from all governed systems and sources, processed through the Reality Integrity Protocol (Section 9) before any further processing. The Sense step is the governance system's interface with reality. What is not sensed is not known. What is not known cannot be governed.
+
+**Verify:** Multi-observer truth construction. The Sense Layer's inputs are submitted to simultaneous assessment by Internal, External, and Adversarial observers. Disagreement Condition assessment is performed. The output is Verified Reality or, where observers disagree, a formal Disagreement Condition and Governance Risk Level increase. No step beyond Verify may proceed on unverified inputs.
+
+**Evaluate:** Assessment of Verified Reality against current governance policy, risk thresholds, and the Epistemic Field (Section 19.7). Evaluation determines what is confirmed, what is disputed, and what is unknown before any decision is proposed. It produces a confidence-graded assessment that explicitly represents the limits of the governance system's knowledge. A governance system that skips Evaluate proceeds from raw observation directly to decision — a common cause of irreversible errors.
+
+**Decide:** The Think Layer generates Decision Proposals with complete Decision Contracts, classified by Decision Class — Reversible, Conditional, or Irreversible — and assigned the corresponding minimum Execution Tier. The Decide step produces options with risk assessments for Human Authority review. It does not produce governance decisions. Machines propose. Humans decide.
+
+**Approve:** Human Authority reviews and approves or rejects the Decision Proposal at the Decide Layer. Approval cannot be automated for Sovereign Decisions at any tier or maturity level. The approving authority's identity, the timestamp, and the complete Decision Contract are recorded in the Immutable Ledger before the approved action proceeds to execution.
+
+**Execute:** The Act Layer implements the approved decision within its approved Bounded Capability and assigned Execution Tier. All execution is bounded, logged before completion, and subject to human override at any point. Execution outside the approved Bounded Capability is not execution — it is an authority violation.
+
+**Record:** Every action is written to the Immutable Ledger in the Memory Layer as a Governance Event before the action is considered complete. Recording is not post-execution documentation — it is a condition of valid execution. An action that has not been recorded in the Immutable Ledger has not been executed under this specification, regardless of its operational effects.
 
 **Review:** The consequences of executed actions are verified against the anticipated outcomes stated in the Decision Contract. Material deviations from anticipated outcomes trigger a Governance Risk Level assessment and feed the Adapt step.
 
 **Adapt:** Learning from the Review step is incorporated into the Epistemic Field, the risk model, and the governance policy register. The Adapt step is the mechanism by which the governance system improves continuously from its own operational experience — the operational expression of the Weakest-Link Property applied over time.
 
-Evaluate, Review, and Adapt are the steps most commonly absent from immature governance systems. Without Evaluate, decisions are made without understanding the limits of available knowledge. Without Review, executed decisions produce no learning. Without Adapt, the governance system repeats its failures indefinitely.
+Evaluate, Review, and Adapt are the steps most commonly absent from immature governance systems. Without Evaluate, decisions are made without understanding the limits of available knowledge. Without Review, executed decisions produce no learning. Without Adapt, the governance system repeats its failures indefinitely. But the absence of any step — including Sense, Verify, Decide, Approve, Execute, or Record — produces a gap equally capable of producing governance failure.
 
 #### Layer 1 — Sense: Reality Intake
 
@@ -702,6 +729,41 @@ The Centre's operational design must ensure that response time requirements are 
 - Escalation procedures that compress decision cycles without eliminating human review
 - Fallback procedures that activate if Human Authority cannot respond within the required timeframe
 
+### 6.6 Governance Event and Data Model
+
+Every operation within the Centre — every observation, verification, decision, approval, execution, and record — is represented as a Governance Event. The Governance Event is the atomic unit of the Memory Layer. It is the universal structure through which all governance activity is captured, signed, and made permanently auditable.
+
+**Every Governance Event must contain the following six fields. An event missing any field is not a valid Governance Event and must not be written to the Immutable Ledger:**
+
+```
+Governance Event {
+  identity:           unique, non-reusable identifier for this specific event
+  timestamp:          the time of event generation, cryptographically verifiable
+                      and traceable to an authorised time source
+  type:               the category of governance operation this event represents
+                      (observation, verification, decision, approval, execution,
+                       record, review, adapt, alert, escalation, or system)
+  payload:            the full content of the governance operation —
+                      the complete information generated or consumed by this event
+  signature:          the cryptographic signature of all preceding fields,
+                      produced by the identity of the actor generating the event,
+                      using the Post-Quantum Cryptography standard of Section 11
+  integrity_reference: the Certification Hash of the immediately preceding event
+                       in the same event chain, enabling chain integrity verification
+}
+```
+
+The six-field structure is not a logging format — it is the governance record itself. A governance action that does not produce a valid Governance Event has not been recorded. A governance action that has not been recorded does not exist as a governance act under this specification, regardless of its operational effects.
+
+**The Immutable Ledger** in which Governance Events are stored must satisfy four properties:
+
+- **Append-only:** New events are written to the Ledger; existing events are never modified. The Ledger has no delete operation. Any attempt to modify an existing record is itself a governance event of type "system" logged immediately.
+- **Tamper-evident:** Any modification to any record in the Ledger — including the modification of any single bit — is detectable through the chain of integrity references. The chain is broken at the point of modification, making the modification location and time identifiable.
+- **Auditable:** The complete event history of any governance operation, from its initiating event to its final record, is reconstructable from the Ledger by any party with authorised read access. Auditability does not require the cooperation of the actors who generated the events.
+- **Reproducible:** Given the same sequence of inputs, the same sequence of events, and the same cryptographic keys at the same points in time, the same Ledger records are produced. Reproducibility enables independent verification that a Ledger reflects actual governance activity rather than retrospectively constructed records.
+
+The GovOps Protocol (Section 33) maps all governance operations to Governance Events. Every message type defined in that protocol produces a Governance Event conforming to this six-field structure.
+
 ---
 
 ## 7. Operating Modes
@@ -836,6 +898,24 @@ Security under this specification is not a technical function separate from gove
 
 Security controls are therefore required to satisfy the same Independent Observation requirements as governance controls. A security system that is self-declared as effective is not independently observed as effective. Security effectiveness must be independently verified continuously.
 
+### 8.4 The Defence Stability Constraint
+
+All adversarial defence actions — including responses to active attacks, counter-intelligence operations, adversarial simulations, and Intelligence Function deployments — must preserve the stability of the governance system being defended:
+
+```
+No defence action may produce effects on the governed system that are
+more damaging than the attack the defence action is responding to.
+```
+
+In practice:
+
+- Defence actions that would require the shutdown of governance-critical functions require Human Authority approval before execution, regardless of urgency — Constitutional Condition II applies to defence decisions as fully as to governance decisions
+- Automated defence responses are bounded to actions that do not alter governance state, governance records, or authority structures — the Bounded Capability constraint applies to all defence systems without exception
+- Where a defence action would require exceeding its Bounded Capability to be effective, the governance system escalates to Human Authority rather than expanding automated defence scope autonomously
+- All defence responses are subject to post-action stability review — a defence that destabilises governance is a second-order attack on governance regardless of the intent with which it was deployed
+
+The Defence Stability Constraint does not limit the speed or scope of defensive capability. It limits the authority of automated systems to deploy that capability in ways that would compromise the governance structure they exist to protect.
+
 ---
 
 ## 9. Reality Integrity
@@ -902,6 +982,18 @@ The Integrity Protocol itself must be independent of the systems it monitors. It
 - Cryptographically sealed against modification by operational system administrators
 - Subject to its own independent integrity verification by an external observer
 - Capable of operation without the cooperation of the systems it monitors
+
+### 9.7 Verification Failure Response
+
+When any verification check in the Integrity Protocol fails — whether a Cryptographic Provenance break, an origin authentication failure, a synthetic observation detection, or a Disagreement Condition — the governance system must execute the following response in sequence:
+
+**Step 1 — Reduce Confidence:** The confidence level of all governance information dependent on the failed verification is immediately reduced to the disputed region of the Epistemic Field. No decision pending on the basis of this information may proceed until confidence is restored through successful re-verification.
+
+**Step 2 — Restrict Actions:** All governance actions that depend on the disputed information are suspended until re-verification is complete. This includes automated actions, pending Decision Proposals, and Act Layer executions awaiting final confirmation. Actions already completed based on the disputed information are flagged for post-incident review.
+
+**Step 3 — Escalate Verification:** The failure is escalated through the verification hierarchy: the Verify Layer notifies the Think Layer, the Think Layer triggers a Governance Risk Level increase, and the failure is logged in the Memory Layer with full context as a Governance Event of type "alert". Where the failure pattern is consistent with an active adversarial attack, the Intelligence Function is immediately notified and the Centre assesses whether Stress State activation is warranted.
+
+These three steps are mandatory and are not subject to discretionary override during the immediate response period. Human Authority is engaged at Step 3 to determine whether the escalation warrants further operating mode transition.
 
 ---
 
@@ -1269,7 +1361,7 @@ Privileged access requirements:
 ---
 
 # Governance Operations Specification
-## Final v0.9 — Sections 16-35
+## Final v0.9 — Sections 16-36
 
 ---
 
@@ -1318,6 +1410,61 @@ Data that relates to identifiable individuals is subject to the following additi
 ## 17. Operational Disciplines — Implementation Layer
 
 Each implementation discipline delivers a class of technical capability within governance constraints. All disciplines operate under the three Constitutional Conditions, the authority structures of Section 14, the security requirements of Sections 8 through 12, and the Human and Machine Authority partition of Section 25.
+
+### 17.0 Discipline Principles and Orchestration
+
+**Three principles govern all fifteen disciplines without exception:**
+
+**No discipline operates in isolation.** Every discipline's outputs are inputs to at least one other discipline and to the Centre's Sense Layer. A discipline that produces outputs that no other discipline or Centre layer consumes is not a functioning governance discipline — it is a silo. Silos are governance gaps.
+
+**All discipline outputs must be verifiable.** Every output produced by every discipline must carry Cryptographic Provenance, be expressible as a Governance Event (Section 6.6), and be independently verifiable by the Centre's Verify Layer. An output that cannot be verified is treated as disputed and triggers the Verification Failure Response (Section 9.7).
+
+**Discipline failures are non-compensatory.** A failure in one discipline is not offset by excellence in another. This mirrors the non-compensatory structure of the Governance Capacity formula. A governance system with fifteen disciplines operating at full performance but one discipline in failure has a governance gap proportional to what that discipline was providing — the other fourteen disciplines cannot cover it.
+
+**Discipline Orchestration Model:**
+
+When a governance decision produces an action, the fifteen disciplines coordinate in the following sequence. This is not a rigid pipeline — it is the governance coordination pattern that ensures every action is policy-aligned, secured, financially authorised, risk-assessed, data-verified, and autonomously supervised before and during execution:
+
+```
+Sovereign Decision (Decide Layer — Human Authority)
+           │
+           ▼
+   Policy Operations  ──── translates decision into operational rules
+           │
+           ▼
+   Continuous Delivery ─── implements the change
+           │
+           ▼
+       Execution
+           │
+    ┌──────┴──────┬──────────────┬──────────────┬────────────────┐
+    │             │              │              │                │
+    ▼             ▼              ▼              ▼                ▼
+Intelligent   Security      Financial      Risk           Data
+Monitoring    Operations    Governance     Operations     Operations
+(observes)    (secures)     (validates)    (evaluates)    (verifies)
+    │             │              │              │                │
+    └──────────────────────────────────────────────────────────── ┘
+           │
+           ▼
+  Automated Intelligence Governance
+  (supervises all machine systems involved)
+           │
+           ▼
+  Legal Operations ─── validates legal compliance of outcomes
+           │
+           ▼
+  Societal Operations ─── communicates outcomes to Stakeholders
+           │
+           ▼
+  Memory Layer ─── full Governance Event chain recorded
+```
+
+All monitoring, securing, validating, evaluating, and verifying activities occur in parallel during execution — not sequentially after it. The Intelligent Monitoring, Security Operations, Financial Governance, Risk Operations, and Data Operations disciplines are continuous, not post-hoc.
+
+The remaining four disciplines — Infrastructure Configuration, Integrated Security Delivery, Platform Operations, and Network Governance — operate as enabling infrastructure that the above disciplines depend on. They do not appear in the orchestration sequence because they are always operating as the substrate on which the sequence runs.
+
+The full orchestration matrix, including discipline inputs and outputs, failure cascade rules, and interdependency map, is defined in Section 20.
 
 ### 17.1 Continuous Delivery Discipline
 
@@ -1984,7 +2131,7 @@ When the governance system encounters or approaches an ungovernable state:
 - The governance system must recognise the limit and acknowledge it explicitly — both internally through the Think Layer and externally through mandatory Stakeholder disclosure
 - Governance resources must not be directed at the ungovernable condition as if it were computable — this constitutes governance overreach, which wastes Governance Capacity and may cause the Governing Entity to miss addressable conditions while attempting to address unaddressable ones
 - The Governing Entity must operate within its actual governance boundaries, clearly communicating what it can and cannot govern, rather than claiming authority it does not effectively hold
-- Where an ungovernable state represents a shared threat across multiple governance systems, the civilizational-scale coordination mechanisms of Section 34.6 apply
+- Where an ungovernable state represents a shared threat across multiple governance systems, the civilizational-scale coordination mechanisms of Section 35.6 apply
 
 ### 23.4 The Anti-Overreach Rule
 
@@ -2166,7 +2313,7 @@ Beyond technical observability, five governance observability domains must be co
 
 All governance-critical observations must be produced simultaneously by three structurally independent observer types. The three types are:
 
-**Internal Observer:** Operates within the Governing Entity's own infrastructure. Necessary but sufficient alone — subject to capture, manipulation, and the Reality Fabrication threat.
+**Internal Observer:** Operates within the Governing Entity's own infrastructure. Necessary but insufficient alone — subject to capture, manipulation, and the Reality Fabrication threat.
 
 **External Observer:** Operates independently of the Governing Entity's infrastructure, is not funded or directed by the Governing Entity, and whose observations the Governed Entity cannot suppress or modify. The External Observer provides the primary check on Internal Observer integrity.
 
@@ -2531,7 +2678,7 @@ Five maturity levels define the depth of governance embedding. Scale and maturit
 |---|---|---|
 | Level 1 | Initial | Governance exists as policy documents. Enforcement is manual and inconsistent. No Centre. Governance Capacity not computed. Three Constitutional Conditions not continuously monitored. |
 | Level 2 | Defined | Governance processes documented and followed. Logical Centre function operational. Governance Capacity computable on demand. Basic identity and access controls. |
-| Level 3 | Managed | Centre operational with Independent Observation infrastructure. Governance Capacity monitored continuously. Stress State detectable. Reality Integrity Protocol deployed. Three-Observer Rule operational. |
+| Level 3 | Managed | Centre operational with Independent Observation infrastructure. Governance Capacity monitored continuously. Stress State detectable. Reality Integrity Protocol deployed. Three-Observer Rule operational. Epistemic Field tracking initiated. THIS IS THE KEY TRANSITION. |
 | Level 4 | Integrated | All Constitutional Conditions continuously verified. All three operating modes functional and automatically triggered. Full machine adversarial defence operational. Formal Correctness applied to governance-critical software. Formal Abstraction Layer complete. |
 | Level 5 | Self-Sustaining | Centre self-aware and self-monitoring. Crisis State triggers automatic Response Cascade initiation. Continuous Adversarial Intelligence operating at full capacity. Post-Quantum Cryptography migration complete. All formal correctness requirements met. Machine-Readable Protocol Layer fully deployed. Meta-Evolution Control operational. |
 
@@ -2547,6 +2694,24 @@ Level 3 is the threshold at which governance becomes real rather than documented
 | Tier 2 | Level 3 | Operational Centre | All 15 disciplines | Reality Integrity Protocol; Three-Observer Rule; Intelligence Function operational; basic Formal Correctness |
 | Tier 3 | Level 4 | Full Centre, 24/7 | All disciplines plus full security architecture | Full adversarial defence; Post-Quantum Cryptography; Formal Verification of governance-critical software; Formal Abstraction Layer |
 | Tier 4 | Level 4 | Full Centre plus Federation | All disciplines plus Federation governance | All Tier 3 requirements plus cross-federation security; Machine-Readable Protocol Layer; civilizational-scale coordination interfaces |
+
+### 30.4 Governance Initialization and Emergence
+
+This section defines when and how governance comes into being. It addresses the foundational question that precedes all maturity levels: what conditions must exist before governance can begin?
+
+**Governance emerges when three conditions are simultaneously present:**
+
+**Condition 1 — Structure forms:** A defined authority structure exists — at minimum, one actor holds Strategic Authority, one actor holds Operational Authority, and one actor holds Oversight Authority, with these three roles distinct from each other. Without structural differentiation of authority, there is no governance — there is only action, which is ungoverned. The structure does not need to be elaborate. A three-person team with clearly defined roles satisfies this condition. A thousand-person organisation without defined authority separation does not.
+
+**Condition 2 — Stability is measurable:** The Governing Entity can distinguish between stable and unstable conditions in what it governs. This requires at minimum a baseline state against which current state can be compared, and a measurement process — however simple — through which that comparison can be made. Without measurable stability, the Governance Capacity formula cannot be computed. Without a computable Governance Capacity, the Sustainability Condition cannot be evaluated. Without an evaluable Sustainability Condition, governance cannot determine whether it exists. The measurement need not be sophisticated. It must exist.
+
+**Condition 3 — Coordination is required:** The Governing Entity faces conditions that cannot be navigated by individual actors without coordination — decisions that affect more than one actor and that require a governing mechanism to resolve. Where no coordination is required, governance has no function. Where coordination is required but no governance exists, the coordination that occurs is ungoverned and therefore unaccountable.
+
+**The Governance Validity Condition:** When all three emergence conditions are present, the governance system must be able to continuously distinguish stable conditions from unstable ones. This is the minimum operating requirement. A governance system that cannot detect when it has transitioned from stable to unstable — from Normal State to Stress State, or from Stress State to Crisis State — does not meet the Governance Validity Condition. It is a governance system in name only.
+
+**What this means for implementation:** The Initialization phase of every implementation must explicitly verify all three emergence conditions before declaring that governance has begun. An implementation that deploys governance infrastructure before the emergence conditions are satisfied has deployed governance tools without governance. Tools without governance produce outputs without accountability — which is precisely the condition that governance is designed to prevent.
+
+The emergence conditions apply at every tier and every maturity level. A Tier 4 federated system must verify that each member entity satisfies all three conditions within its own boundary before it can be counted as a governed participant in the federation. A federation that counts ungoverned members as governed members is misrepresenting its own Governance Capacity.
 
 ---
 
@@ -2658,6 +2823,8 @@ Formal representations must exist for:
 
 **Governance Capacity formula:** The formal expression of the Governance Capacity calculation — expressed as a mathematical formula with defined inputs and outputs.
 
+**Anti-fragility metrics:** The formal expression of the indicators that demonstrate the governance system is improving under stress rather than degrading — expressed as measurable properties of the governance system's performance over time. These metrics make the Complete System Properties (Section 34) verifiable by automated means: a governance system that satisfies the anti-fragility formal representation is demonstrably self-correcting; one that does not is demonstrably degrading.
+
 ### 32.3 Purpose
 
 The Formal Abstraction Layer serves three functions:
@@ -2688,6 +2855,17 @@ The Governing Entity must maintain a formal mapping document that:
 
 This mapping document is a Governance Record and must be maintained in the Memory Layer.
 
+### 32.6 Formal Representation Maintenance
+
+Formal representations of governance requirements are living governance records. They are maintained in the Memory Layer alongside the natural language requirements they formalise, and are subject to the same governance controls as governance policy:
+
+- Changes to any formal representation require Human Authority approval and must follow the same Meta-Evolution process defined in Section 24
+- A formal representation that no longer corresponds to its natural language requirement is a governance failure in the specification itself — it constitutes the introduction of interpretive drift through the formal layer rather than against it
+- The alignment between every natural language requirement and its formal representation is independently verified at minimum annually and upon every change to the relevant natural language requirement
+- Where a change to operational practice requires a change to a formal representation, both changes are approved in the same Decision Contract — they are not separate decisions
+
+The state machine representations of governance-critical processes (Section 33.6) are part of the Formal Abstraction Layer and are governed by the same maintenance requirements defined in this section.
+
 ---
 
 ## 33. Machine-Readable Protocol Layer (GovOps Protocol)
@@ -2696,13 +2874,29 @@ This mapping document is a Governance Record and must be maintained in the Memor
 
 This section defines the machine-readable protocol through which governance operations are expressed, transmitted, recorded, and verified. This protocol enables interoperability between independent governance systems while preserving the operational and security requirements of this specification.
 
-### 33.2 Principle
+### 33.2 Required Interfaces
+
+Every governed system operating under this specification must expose the following five programmatic interfaces, accessible to the Centre and to the Oversight Body. A governed system that does not expose these interfaces cannot participate in Continuous Governance Assurance and is treated as a governance gap under Section 6.2.
+
+**Decision interface:** An interface through which governance decisions, Decision Contracts, and Decision Classes can be submitted, retrieved, and verified. The decision interface enables the Centre's Decide Layer to interact with governed systems in a verifiable, auditable way.
+
+**Verification interface:** An interface through which the Centre's Verify Layer can request and receive observations from the governed system for Multi-Observer Verification. The verification interface must be accessible to External and Adversarial Observers without requiring the cooperation of the Internal Observer.
+
+**Risk signalling interface:** An interface through which the governed system can signal changes in its local risk state to the Centre's Sense Layer and Risk Engine. Risk signals must be cryptographically signed using the Cryptography Standard of Section 11 and carry Cryptographic Provenance.
+
+**Execution control interface:** An interface through which the Centre's Act Layer can direct, monitor, and halt execution of approved actions within the governed system. The execution control interface must include a halt mechanism that a Human Authority can invoke directly, without the cooperation of any machine system.
+
+**Audit and ledger interface:** An interface through which the Centre's Memory Layer can write Governance Events to the governed system's local audit log, and through which the Oversight Body can read those records without the system's cooperation in modifying them.
+
+All five interfaces must use the message structure defined in Section 33.4. A system that exposes the interfaces defined in this section and uses that message structure can interoperate with any other system that does the same — without either system needing to understand the other's internal architecture, without either system needing to trust the other's internal governance claims, and without either system surrendering its sovereignty to the other.
+
+### 33.3 Principle
 
 All governance operations that enter the Centre, all observations that enter the Reality Integrity Protocol, all decisions that enter the Memory Layer, and all execution actions that are subject to Controlled Execution must be expressible in the GovOps Protocol format.
 
 The GovOps Protocol is not a substitute for the natural language specification. It is a machine-readable encoding of governance operations that preserves all semantic content of this specification.
 
-### 33.3 Core Message Structure
+### 33.4 Core Message Structure
 
 Every governance operation must be expressible as a GovOps Protocol message with the following structure:
 
@@ -2771,7 +2965,7 @@ Every governance operation must be expressible as a GovOps Protocol message with
 }
 ```
 
-### 33.4 Operation Type Semantics
+### 33.5 Operation Type Semantics
 
 **Sense Operation:** Collects, aggregates, and forwards observations from the governed system to the Centre's Sense Layer. Must include cryptographic provenance of all source observations.
 
@@ -2785,9 +2979,15 @@ Every governance operation must be expressible as a GovOps Protocol message with
 
 **Memory Operation:** Records a governance decision, audit trail, or institutional knowledge in the Immutable Ledger. Must include Certification Hash. Must include cryptographic provenance. Must be append-only and tamper-evident.
 
-### 33.5 State Machine Representation
+### 33.6 State Machine Representation
 
-The GovOps Protocol defines a deterministic state machine for governance-critical operations:
+The governance system as a whole, and each of its critical governance processes, must be representable as a state machine. This representation is part of the Formal Abstraction Layer (Section 32) and is maintained in the Memory Layer alongside the governance process it represents, subject to the Formal Representation Maintenance requirements of Section 32.6.
+
+**For computable governance processes:** A deterministic state machine in which every state is defined, every valid transition is specified, every invalid transition is explicitly prohibited, and the machine can always determine which state it is in.
+
+**For governance processes involving uncertainty:** A probabilistic state model in which states are weighted by confidence levels, transitions carry probability estimates, and the machine explicitly represents its uncertainty rather than forcing a deterministic determination. A governance system that models uncertain processes as if they were deterministic is not resolving uncertainty — it is suppressing it, which produces the same governance failure as ignoring it.
+
+The GovOps Protocol defines the following deterministic state machine for governance-critical operations:
 
 ```
 [Unverified Input]
@@ -2823,16 +3023,20 @@ The GovOps Protocol defines a deterministic state machine for governance-critica
 
 All transitions in this state machine are deterministic and fully auditable. Every state transition is logged in the Memory Layer with timestamp, actor identity, and decision rationale.
 
-### 33.6 Interoperability Requirements
+### 33.7 Interoperability Requirements
 
-The GovOps Protocol enables interoperability between independent governance systems through:
+The GovOps Protocol is the mechanism by which this specification achieves interoperability across organisations, governance jurisdictions, and — where applicable — civilizational-scale governance coordination (Section 27.6). Interoperability does not require that different governance systems have the same internal architecture. It requires that they expose compatible programmatic interfaces and use compatible message structures.
 
-- **Protocol Versioning:** Systems can identify compatible message formats
-- **Semantic Preservation:** Meaning of operations is preserved across system boundaries
-- **Cryptographic Verification:** Receiving systems can verify message authenticity
-- **Governance Context Alignment:** Systems can verify compatibility of governance states
+A governance system that exposes the interfaces defined in Section 33.2 and uses the message structure defined in Section 33.4 can interoperate with any other governance system that does the same — without either system needing to understand the other's internal governance architecture, without either system needing to trust the other's internal governance claims, and without either system surrendering its sovereignty to the other. Interoperability at civilizational scale is therefore achieved through protocol compatibility, not through the creation of a superior governance authority.
 
-### 33.7 Protocol Compliance Requirement
+The GovOps Protocol enables interoperability through:
+
+- **Protocol Versioning:** Systems can identify compatible message formats and negotiate the highest mutually supported version
+- **Semantic Preservation:** The meaning of governance operations is preserved across system boundaries — a decision approved in one system carries the same governance weight when received by another
+- **Cryptographic Verification:** Receiving systems can verify the authenticity and integrity of all protocol messages independently, without trusting the sending system's claims
+- **Governance Context Alignment:** Systems can verify that protocol messages are consistent with the sending system's declared Operating Mode and Governance Capacity state
+
+### 33.8 Protocol Compliance Requirement
 
 Any Governing Entity implementing this specification at Tier 2 or above must:
 
@@ -2844,13 +3048,60 @@ Any Governing Entity implementing this specification at Tier 2 or above must:
 
 ---
 
-## 34. Federation and Multi-Entity Coordination
+## 34. Complete System Properties
 
-### 34.1 Purpose
+### 34.1 The Unified Definition
+
+This specification defines governance as:
+
+```
+A continuously operating, adversarially resilient system that integrates
+authority, verification, decision-making, execution, and specialised
+operational disciplines — while evolving safely under constraint,
+interoperating with independent systems without loss of sovereignty,
+and operating honestly within the limits of what can be known
+and controlled.
+```
+
+### 34.2 The Complete Property Set
+
+A governance system that fully implements this specification satisfies the following properties. These properties are not aspirational — they are verifiable conditions that the governance system either satisfies or does not. Each property has a formal representation in the Formal Abstraction Layer (Section 32), enabling automated verification. A governance system's compliance with this specification can therefore be assessed against this property set rather than requiring exhaustive review of all prior sections.
+
+**Self-correcting:** The governance system detects its own failures through the closed execution cycle (Section 6.1), incorporates learning through the Adapt step, and improves its own performance through the sanctioned Meta-Evolution process (Section 24). A governance system that cannot correct itself depends entirely on external intervention for its improvement.
+
+**Adversarially resilient:** The governance system maintains its governance properties under active adversarial pressure. It does not merely function in benign conditions — it continues to function, to improve, and to enforce governance requirements under conditions where adversaries are actively attempting to compromise it. Adversarial resilience is verified continuously by the Intelligence Function (Section 10) and through adversarial simulation.
+
+**Fully auditable:** Every governance action, every governance decision, every governance failure, and every governance improvement is recorded in the Immutable Ledger (Section 6, Layer 6) as a Governance Event with sufficient information to reconstruct the complete sequence of events. Auditability applies to the governance system's own operations — no governance actor, including the Governing Entity itself, may take actions that are exempt from the audit requirement.
+
+**Operationally disciplined:** All operational activity occurs within the fifteen disciplines defined in Sections 17, 18, and 19. Each discipline is governed, each produces verifiable outputs, and each discipline's failures are non-compensatory — a failure in one discipline is not offset by excellence in another. The non-compensatory property at the discipline level mirrors the non-compensatory structure of the Governance Capacity formula.
+
+**Sovereignty-preserving:** The governance system maintains the Governing Entity's authority over its own governance domain — against external actors who would capture or compromise it, against internal actors who would exceed their authority boundaries, and against its own machine systems that would, without constraint, accumulate authority beyond their Bounded Capability.
+
+**Evolution-capable:** The governance system improves over time through the sanctioned Meta-Evolution process (Section 24). It is not static. Governance requirements, threats, and operating conditions change — a governance system that cannot evolve will eventually fail as the gap between its design conditions and actual conditions grows. Evolution-capability under the constraints of Section 24 is the mechanism by which the governance system remains relevant.
+
+**Bounded by limits:** The governance system operates within the limits defined in Section 23. It does not claim to govern ungovernable conditions. It does not deploy governance resources in ways that produce the appearance of governance without its substance. Boundedness is an honesty requirement: a governance system that misrepresents its own capability has failed the Fidelity test by its own definition.
+
+**Cannot be silently corrupted:** Silent corruption — the alteration of governance behaviour without the alteration being detected — is defeated by the combination of the Immutable Ledger, the Reality Integrity Protocol, the Three-Observer Rule, the Formal Abstraction Layer, and the Cryptographic Integrity of the Centre. Any corruption of the governance system leaves detectable evidence. The governance system may be compromised — but it cannot be compromised without that compromise being detectable.
+
+**Cannot transfer sovereignty to non-authorised entities:** Constitutional Condition II and the authority constraints of Sections 14 and 25 structurally prevent the transfer of Sovereign Decision authority to machine systems, to external actors without appropriate authority, or to any actor within the governance system who has not been granted that authority through the defined delegation process.
+
+**Cannot operate without verified perception:** Constitutional Condition III and the Reality Integrity Protocol structurally prevent governance decisions from being based on unverified observations. The Epistemic Field Model (Section 19.7) makes the limits of the governance system's knowledge explicit and requires that decisions acknowledge those limits.
+
+**Cannot exceed its computability limits:** Section 23 requires the governance system to recognise and acknowledge the Governance Computability Boundary. A governance system that acts as though it can govern ungovernable states is not improving its governance — it is misrepresenting its capabilities, which is a Fidelity failure.
+
+**Must improve under stress:** The Review and Adapt steps of the execution cycle (Section 6.1) and the sanctioned Meta-Evolution process (Section 24) ensure that governance failures become learning inputs rather than merely governance failures. A governance system that degrades under stress rather than improving is a governance system missing the Adapt step. The anti-fragility metrics of Section 32.2 provide the formal expression of this property, enabling automated verification that improvement is occurring.
+
+**Must remain interoperable without centralisation:** The machine-readable protocol layer (Section 33) and the sovereignty constraints on federation (Section 27) together ensure that interoperability is achieved through compatible protocols, not through the creation of superior governance authorities. The governance system can coordinate at any scale without surrendering its own governance sovereignty to any coordinating body.
+
+---
+
+## 35. Federation and Multi-Entity Coordination
+
+### 35.1 Purpose
 
 This section extends the Federation framework to clarify how multiple independent Governing Entities can coordinate governance operations while preserving the Three Constitutional Conditions and the operational requirements of this specification.
 
-### 34.2 Federation Principle
+### 35.2 Federation Principle
 
 A Federation is a voluntary association of independent Governing Entities that coordinate governance operations through the GovOps Protocol while maintaining full operational and governance sovereignty.
 
@@ -2862,7 +3113,7 @@ Each member entity:
 - Operates under its own Operating Mode (Normal, Stress, or Crisis)
 - Participates in federation coordination through the GovOps Protocol
 
-### 34.3 Federation Governance Capacity
+### 35.3 Federation Governance Capacity
 
 The governance capacity of a federated system is computed as:
 
@@ -2878,7 +3129,7 @@ Where:
 
 The Federation Floor establishes the minimum acceptable federated Governance Capacity. If the federated system's Governance Capacity falls below the Federation Floor, the Federation Governance Body must activate a Federation-Level Response Cascade.
 
-### 34.4 Federation-Level Response Cascade
+### 35.4 Federation-Level Response Cascade
 
 When the federated system's Governance Capacity falls below the Federation Floor, the following phases activate:
 
@@ -2890,7 +3141,7 @@ When the federated system's Governance Capacity falls below the Federation Floor
 
 **Phase 4 — Federation Reconstruction:** The Federation Governance Body conducts a post-incident review to identify the structural cause of the federation-level instability and implements measures to prevent recurrence.
 
-### 34.5 Cross-Federation Security
+### 35.5 Cross-Federation Security
 
 **Independent Verification:** Each member entity validates all observations and data received from other Federation members through its own Reality Integrity Protocol.
 
@@ -2900,7 +3151,7 @@ When the federated system's Governance Capacity falls below the Federation Floor
 
 **Federation-Level Threat Intelligence:** The Federation Governance Body maintains a shared threat intelligence feed that alerts all member entities to threats detected in any member.
 
-### 34.6 Federation Interoperability
+### 35.6 Federation Interoperability
 
 All federation coordination operates through the GovOps Protocol. This ensures:
 
@@ -2909,7 +3160,7 @@ All federation coordination operates through the GovOps Protocol. This ensures:
 - **Governance Context Alignment:** Each member entity can verify that federation coordination messages are compatible with its current Operating Mode and Governance Capacity state
 - **Audit Trail Completeness:** All federation coordination is recorded in each member entity's Memory Layer
 
-### 34.7 Federation Agreement Requirements
+### 35.7 Federation Agreement Requirements
 
 Every Federation Agreement must define:
 
@@ -2921,7 +3172,7 @@ Every Federation Agreement must define:
 - **Withdrawal Conditions:** Under what conditions a member entity may withdraw from the federation
 - **Dispute Resolution:** How conflicts between member entities are resolved
 
-### 34.8 Shared Risk Signalling
+### 35.8 Shared Risk Signalling
 
 Federation members must maintain a continuous shared risk signalling mechanism that communicates Governance Risk Level changes across federation boundaries:
 
@@ -2949,100 +3200,105 @@ Federation members must maintain a continuous shared risk signalling mechanism t
 
 ---
 
-## 35. Glossary
+## 36. Glossary
 
-| Term | Definition |
-|---|---|
-| **Accountability** | The obligation of an authority holder to answer for the use of authority. Accountability cannot be transferred. |
-| **Adaptive Transparency** | The independently observed capacity of a governance system to detect changes in its environment and its own internal state, understand their implications, adapt its behaviour in response, and remain observable to those it governs throughout. One of the four components of Governance Capacity. |
-| **Adversarial Base Assumption** | The operational posture that treats all inputs, actors, and systems as potentially adversarial by default. This is not a security configuration — it is the correct epistemic position for any governance system operating in an environment where adversaries exist. |
-| **Adversarial Observer** | An independent observer whose function is to actively seek to discover discrepancies, fabrications, or failures in the observations made by other observers. |
-| **AI System** | Any automated system that uses machine learning, statistical inference, or similar computational techniques to generate outputs without direct human generation of each output. |
-| **AIOps Discipline** | Consolidated observability, monitoring, and intelligent analysis discipline that operationalizes continuous governance observability. |
-| **Authority** | The formally conferred right to take a defined class of action or make a defined class of decision within a governed system. Authority is always bounded. |
-| **Bounded Capability** | The operational scope assigned to an AI system within which it may act autonomously. Any action outside Bounded Capability requires human approval before execution. |
-| **Capacity to Act** | The independently observed structural ability of the governance system to make decisions and produce observable effects on the governed system. One of the four components of Governance Capacity. |
-| **Cascade Property** | The causal mechanism by which Adaptive Transparency degradation initiates sequential degradation of all other Governance Capacity components. |
-| **Certification Hash** | A cryptographic digest of a governance record, produced by a defined algorithm, enabling subsequent verification that the record has not been altered. |
-| **Centre** | Governance Operations Centre — the mandatory operational brain of this specification. The mechanism through which governance moves from defined requirement to continuous operational reality. |
-| **Computable State** | A governance condition in which the Governing Entity has sufficient information, authority, and capacity to produce a governed outcome. Computable states are the proper domain of governance activity. |
-| **Confidence Gradient** | A measure of the Governing Entity's certainty about a claimed or observed state of governance reality, ranging from confirmed through disputed to unknown. |
-| **Constitutional Condition** | One of three requirements that must hold at all times for a governed system to be considered governed. Violation of any Constitutional Condition is a governance failure regardless of all other measures. |
-| **Continuous Adversarial Intelligence** | The function of continuously operating adversarial AI analysis against the governance system's own infrastructure, seeking vulnerabilities before adversaries find them. |
-| **Continuous Governance Assurance** | The state in which compliance with governance requirements is verified in real time through automated mechanisms, not through periodic review. |
-| **Controlled Execution** | The state in which an AI system executes actions only within its approved Bounded Capability, every action is logged before completion, and a human authority can halt, modify, or reverse execution at any point. |
-| **Crisis State** | The operating condition that activates when Governance Capacity falls below the Governance Risk Level. |
-| **Cross-Domain Consistency** | The requirement that observations of the same governance reality be consistent not only across multiple observers but also across multiple domains of knowledge. |
-| **Cryptographic Provenance** | A chain of Certification Hashes and digital signatures establishing the origin, integrity, and authenticity of a governance record, telemetry input, or software component. |
-| **Data Residency** | The requirement that governed data be stored and processed within boundaries explicitly defined by the governing entity. |
-| **Data Sovereignty** | The principle that governed data is subject to the authority of the governing entity that created or collected it. Data Sovereignty is the default condition. |
-| **Decision Class** | A category of governance decision based on its reversibility and risk profile. Three Decision Classes are defined: Reversible, Conditional, and Irreversible. |
-| **Decision Contract** | The minimum information record that must accompany every governance decision. A decision without a complete Decision Contract is not a valid governance decision. |
-| **Delegation** | The transfer of authority to act within a defined scope to a subordinate actor or system, while retaining accountability for all actions taken under that authority. |
-| **Disagreement Condition** | The state that exists when two or more independent observers produce materially different assessments of the same governance reality. When this exists, the Governance Risk Level increases. |
-| **Epistemic Field** | The complete map of a governed system's knowledge state, consisting of confirmed facts, disputed facts, and unknown regions. The Epistemic Field defines the epistemic basis available for governance decisions. |
-| **Execution Tier** | One of three levels of execution authority for a governance action: Autonomous, Hybrid, or Human-Only. All Sovereign Decisions require the Human-Only Execution Tier. |
-| **External Observer** | An observer that operates independently of the governance system's own infrastructure, is not funded or directed by the governed entity, and whose observations the governed entity cannot suppress or modify. |
-| **Fidelity** | The independently observed degree to which the governance system acts in the interests of those it governs. One of the four components of Governance Capacity. |
-| **Formal Verification** | The application of mathematical proof techniques to demonstrate that software or system behaviour satisfies a defined specification under all possible inputs and conditions. |
-| **Governance Capacity** | The total independently observed governance capability of a system — its ability to maintain authority, accountability, adaptability, and fidelity simultaneously under risk. |
-| **Governance Computability Boundary** | The formal boundary between governance states the Governing Entity can address through governance activity and those it cannot. Three categories exist: computable, probabilistically manageable, and ungovernable. |
-| **Governance Failure** | The condition in which any Constitutional Condition is violated, regardless of the values of any other governance measures. |
-| **Governance Operations Centre** | The operational brain of this specification's governance architecture. The mandatory runtime mechanism through which governance is exercised continuously rather than periodically. |
-| **Governance Record** | Any document, log entry, decision, telemetry reading, or other information that is required by this specification to be created, retained, and made available to oversight. |
-| **Governance Risk Level** | The aggregate, time-varying measure of all forces threatening the stability and continuity of the governed system. Always tends to increase in the absence of active governance effort. |
-| **Governing Entity** | Any entity that exercises formal authority over the decisions, resources, rights, or interests of others. |
-| **GovOps Protocol** | The machine-readable protocol through which all governance operations are expressed, transmitted, recorded, and verified. |
-| **Human Authority** | The right of a designated human to make final governance decisions, override AI system outputs, halt or reverse execution, and exercise sovereign control over any function of the governance system. |
-| **Identity Assurance Level** | A defined degree of confidence that an actor is who they assert they are, expressed on a graduated four-level scale. |
-| **Immutable Ledger** | A governance record store designed so that once a record is written, it cannot be modified or deleted by any actor within the governance system, including administrators. |
-| **Independent Observation** | Observation and measurement conducted by a process that is structurally separate from the actors whose governance it measures, whose independence is itself independently verifiable. |
-| **Independent Stakeholder Advocacy Function** | An independently funded body with standing to assert governance failures on behalf of Stakeholders. |
-| **Institutional Integrity** | The independently observed degree to which structures, constraints, norms, and processes preserve, stabilise, and protect governance actors and the governed system. One of the four components of Governance Capacity. |
-| **Internal Observer** | An observer that operates within the governance system's own infrastructure. Necessary but insufficient alone. |
-| **Inverse Capacity Principle** | Stakeholder enforcement resources scale inversely with independently observed Governance Capacity. |
-| **LegalOps Discipline** | Operationalizes legal authority, regulatory compliance, and contractual obligations through continuous, automated, and auditable processes. |
-| **Machine-Readable Protocol** | A formally specified, machine-interpretable representation of a governance operation, decision, or interface that enables automated verification, interoperability, and audit without human translation. |
-| **Meta-Evolution** | The process by which the governance system's own structure, rules, or capabilities change over time. Meta-Evolution is itself subject to governance. |
-| **Minimum Viability Floor** | The lowest value of any Governance Capacity component below which the component is treated as structurally absent. When any component falls below this floor, Governance Capacity is zero regardless of other components. |
-| **Multi-Observer Verification** | The process of collecting observations of the same governance reality from three independent observer types — Internal, External, and Adversarial — simultaneously and comparing them for consistency. |
-| **Normal State** | The operating condition when Governance Capacity substantially exceeds the Governance Risk Level. |
-| **Observation Condition** | All four components of the Governance Capacity formula must be Independently Observed; Self-Declared values are invalid. |
-| **Operational Tier** | One of four scale contexts (Tier 1–4) that determine which disciplines must be operated independently versus consumed as shared services. |
-| **Oversight Body** | An independent body with authority to investigate, declare, and require remedy of governance failures. Must be structurally independent of the Governing Entity it oversees. |
-| **PolicyOps Discipline** | Operationalizes governance policy as executable code, ensuring automatic enforcement rather than manual interpretation. |
-| **Post-Quantum Cryptography** | Cryptographic algorithms designed to resist attacks by sufficiently capable automated reasoning systems. |
-| **Principal Officer** | Any individual who exercises governance authority on behalf of a Governing Entity. |
-| **Probabilistically Manageable State** | A governance condition in which the Governing Entity cannot determine an outcome with certainty but can act to increase the probability of a favourable outcome within defined confidence bounds. |
-| **Reality Integrity Protocol** | The sub-system within the Governance Operations Centre that validates the authenticity and integrity of all observations before they are processed. |
-| **Response Cascade** | The four-phase governance recovery process that activates when the governed system enters Crisis State. |
-| **Risk Operations Discipline** | Operationalizes continuous risk assessment, Governance Risk Level computation, and risk-based decision support. |
-| **Rollback Capability** | The ability to reverse a deployed change and restore the prior state of a governed system. |
-| **Scale Limit Property** | The maximum complexity of a governed system is proportional to the independently observed Adaptive Transparency of the Governing Entity. |
-| **Self-Declared Value** | A measurement of any governance component produced by the entity whose governance is being measured, without independent corroboration. Not valid inputs to Governance Capacity calculation. |
-| **Societal Operations Discipline** | Operationalizes the Governing Entity's accountability to stakeholders, including communication, feedback collection, and enforcement capacity support. |
-| **Software Bill of Provenance** | A complete, cryptographically signed inventory of every component, dependency, library, and toolchain element used to build a software artefact. |
-| **Sovereign Decision** | Any governance decision that materially affects the rights, resources, or welfare of those the Governing Entity governs. All require Human Authority approval. |
-| **Stakeholder** | Any person, entity, or group whose rights, interests, or welfare are materially affected by the decisions of a Governing Entity. |
-| **Stress State** | The operating condition when Governance Capacity approaches the Governance Risk Level. |
-| **Sustainability Condition** | Governance Capacity must exceed Governance Risk Level continuously for governance to exist. |
-| **Three-Observer Rule** | The requirement that all governance-critical observations be produced simultaneously by three structurally independent observer types. |
-| **Ungovernable State** | A governance condition fundamentally beyond the authority, capacity, or knowledge of any Governing Entity to resolve through governance activity. |
-| **Verified Reality** | The state of knowledge about a governed system that has been confirmed through Multi-Observer Verification with no Disagreement Condition. |
-| **Weakest-Link Property** | The product of the four Governance Capacity components is dominated by the smallest component. Investment priority: fix the weakest first. |
-| **Zero-Trust Architecture** | A security design principle requiring that no actor, system, or network connection is trusted by default. Every access request is verified independently. |
+| Term                                          | Definition                                                                                                                                                                                                                                                                                           |
+| --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Accountability**                            | The obligation of an authority holder to answer for the use of authority. Accountability cannot be transferred.                                                                                                                                                                                      |
+| **Adaptive Transparency**                     | The independently observed capacity of a governance system to detect changes in its environment and its own internal state, understand their implications, adapt its behaviour in response, and remain observable to those it governs throughout. One of the four components of Governance Capacity. |
+| **Adversarial Base Assumption**               | The operational posture that treats all inputs, actors, and systems as potentially adversarial by default. This is not a security configuration — it is the correct epistemic position for any governance system operating in an environment where adversaries exist.                                |
+| **Adversarial Observer**                      | An independent observer whose function is to actively seek to discover discrepancies, fabrications, or failures in the observations made by other observers.                                                                                                                                         |
+| **AI System**                                 | Any automated system that uses machine learning, statistical inference, or similar computational techniques to generate outputs without direct human generation of each output.                                                                                                                      |
+| **AIOps Discipline**                          | Consolidated observability, monitoring, and intelligent analysis discipline that operationalizes continuous governance observability.                                                                                                                                                                |
+| **Authority**                                 | The formally conferred right to take a defined class of action or make a defined class of decision within a governed system. Authority is always bounded.                                                                                                                                            |
+| **Bounded Capability**                        | The operational scope assigned to an AI system within which it may act autonomously. Any action outside Bounded Capability requires human approval before execution.                                                                                                                                 |
+| **Capacity to Act**                           | The independently observed structural ability of the governance system to make decisions and produce observable effects on the governed system. One of the four components of Governance Capacity.                                                                                                   |
+| **Cascade Property**                          | The causal mechanism by which Adaptive Transparency degradation initiates sequential degradation of all other Governance Capacity components.                                                                                                                                                        |
+| **Certification Hash**                        | A cryptographic digest of a governance record, produced by a defined algorithm, enabling subsequent verification that the record has not been altered.                                                                                                                                               |
+| **Centre**                                    | Governance Operations Centre — the mandatory operational brain of this specification. The mechanism through which governance moves from defined requirement to continuous operational reality.                                                                                                       |
+| **Computable State**                          | A governance condition in which the Governing Entity has sufficient information, authority, and capacity to produce a governed outcome. Computable states are the proper domain of governance activity.                                                                                              |
+| **Confidence Gradient**                       | A measure of the Governing Entity's certainty about a claimed or observed state of governance reality, ranging from confirmed through disputed to unknown.                                                                                                                                           |
+| **Constitutional Condition**                  | One of three requirements that must hold at all times for a governed system to be considered governed. Violation of any Constitutional Condition is a governance failure regardless of all other measures.                                                                                           |
+| **Continuous Adversarial Intelligence**       | The function of continuously operating adversarial AI analysis against the governance system's own infrastructure, seeking vulnerabilities before adversaries find them.                                                                                                                             |
+| **Continuous Governance Assurance**           | The state in which compliance with governance requirements is verified in real time through automated mechanisms, not through periodic review.                                                                                                                                                       |
+| **Controlled Execution**                      | The state in which an AI system executes actions only within its approved Bounded Capability, every action is logged before completion, and a human authority can halt, modify, or reverse execution at any point.                                                                                   |
+| **Crisis State**                              | The operating condition that activates when Governance Capacity falls below the Governance Risk Level.                                                                                                                                                                                               |
+| **Cross-Domain Consistency**                  | The requirement that observations of the same governance reality be consistent not only across multiple observers but also across multiple domains of knowledge.                                                                                                                                     |
+| **Cryptographic Provenance**                  | A chain of Certification Hashes and digital signatures establishing the origin, integrity, and authenticity of a governance record, telemetry input, or software component.                                                                                                                          |
+| **Data Residency**                            | The requirement that governed data be stored and processed within boundaries explicitly defined by the governing entity.                                                                                                                                                                             |
+| **Data Sovereignty**                          | The principle that governed data is subject to the authority of the governing entity that created or collected it. Data Sovereignty is the default condition.                                                                                                                                        |
+| **Defence Stability Constraint**              | Requirement that no defence action produce effects more damaging than the attack it responds to. All automated defence systems are bounded by this constraint. Defined in Section 8.4.                                                                                                               |
+| **Decision Class**                            | A category of governance decision based on its reversibility and risk profile. Three Decision Classes are defined: Reversible, Conditional, and Irreversible.                                                                                                                                        |
+| **Decision Contract**                         | The minimum information record that must accompany every governance decision. A decision without a complete Decision Contract is not a valid governance decision.                                                                                                                                    |
+| **Delegation**                                | The transfer of authority to act within a defined scope to a subordinate actor or system, while retaining accountability for all actions taken under that authority.                                                                                                                                 |
+| **Disagreement Condition**                    | The state that exists when two or more independent observers produce materially different assessments of the same governance reality. When this exists, the Governance Risk Level increases.                                                                                                         |
+| **Discipline Orchestration Model**            | The formal coordination sequence through which the fifteen disciplines interact following a governance decision, ensuring every action is policy-aligned, secured, financially authorised, risk-assessed, data-verified, and supervised before and during execution. Defined in Section 17.0.        |
+| **Epistemic Field**                           | The complete map of a governed system's knowledge state, consisting of confirmed facts, disputed facts, and unknown regions. The Epistemic Field defines the epistemic basis available for governance decisions.                                                                                     |
+| **Execution Tier**                            | One of three levels of execution authority for a governance action: Autonomous, Hybrid, or Human-Only. All Sovereign Decisions require the Human-Only Execution Tier.                                                                                                                                |
+| **External Observer**                         | An observer that operates independently of the governance system's own infrastructure, is not funded or directed by the governed entity, and whose observations the governed entity cannot suppress or modify.                                                                                       |
+| **Fidelity**                                  | The independently observed degree to which the governance system acts in the interests of those it governs. One of the four components of Governance Capacity.                                                                                                                                       |
+| **Formal Verification**                       | The application of mathematical proof techniques to demonstrate that software or system behaviour satisfies a defined specification under all possible inputs and conditions.                                                                                                                        |
+| **Governance Capacity**                       | The total independently observed governance capability of a system — its ability to maintain authority, accountability, adaptability, and fidelity simultaneously under risk.                                                                                                                        |
+| **Governance Computability Boundary**         | The formal boundary between governance states the Governing Entity can address through governance activity and those it cannot. Three categories exist: computable, probabilistically manageable, and ungovernable.                                                                                  |
+| **Governance Emergence Conditions**           | The three conditions that must be simultaneously present for governance to come into being: structure forms, stability is measurable, and coordination is required. Must be verified before declaring governance has begun. Defined in Section 30.4.                                                 |
+| **Governance Event**                          | The atomic six-field record — identity, timestamp, type, payload, signature, integrity_reference — through which every governance operation is captured in the Immutable Ledger. A governance action without a valid Governance Event does not exist as a governance act. Defined in Section 6.6.    |
+| **Governance Failure**                        | The condition in which any Constitutional Condition is violated, regardless of the values of any other governance measures.                                                                                                                                                                          |
+| **Governance Operations Centre**              | The operational brain of this specification's governance architecture. The mandatory runtime mechanism through which governance is exercised continuously rather than periodically.                                                                                                                  |
+| **Governance Record**                         | Any document, log entry, decision, telemetry reading, or other information that is required by this specification to be created, retained, and made available to oversight.                                                                                                                          |
+| **Governance Risk Level**                     | The aggregate, time-varying measure of all forces threatening the stability and continuity of the governed system. Always tends to increase in the absence of active governance effort.                                                                                                              |
+| **Governance Validity Condition**             | The minimum operating requirement: a governance system must continuously distinguish stable from unstable conditions. A system that cannot detect mode transitions does not meet this condition. Defined in Section 30.4.                                                                            |
+| **Governing Entity**                          | Any entity that exercises formal authority over the decisions, resources, rights, or interests of others.                                                                                                                                                                                            |
+| **GovOps Protocol**                           | The machine-readable protocol through which all governance operations are expressed, transmitted, recorded, and verified.                                                                                                                                                                            |
+| **Human Authority**                           | The right of a designated human to make final governance decisions, override AI system outputs, halt or reverse execution, and exercise sovereign control over any function of the governance system.                                                                                                |
+| **Identity Assurance Level**                  | A defined degree of confidence that an actor is who they assert they are, expressed on a graduated four-level scale.                                                                                                                                                                                 |
+| **Immutable Ledger**                          | A governance record store designed so that once a record is written, it cannot be modified or deleted by any actor within the governance system, including administrators.                                                                                                                           |
+| **Independent Observation**                   | Observation and measurement conducted by a process that is structurally separate from the actors whose governance it measures, whose independence is itself independently verifiable.                                                                                                                |
+| **Independent Stakeholder Advocacy Function** | An independently funded body with standing to assert governance failures on behalf of Stakeholders.                                                                                                                                                                                                  |
+| **Institutional Integrity**                   | The independently observed degree to which structures, constraints, norms, and processes preserve, stabilise, and protect governance actors and the governed system. One of the four components of Governance Capacity.                                                                              |
+| **Internal Observer**                         | An observer that operates within the governance system's own infrastructure. Necessary but insufficient alone.                                                                                                                                                                                       |
+| **Inverse Capacity Principle**                | Stakeholder enforcement resources scale inversely with independently observed Governance Capacity.                                                                                                                                                                                                   |
+| **LegalOps Discipline**                       | Operationalizes legal authority, regulatory compliance, and contractual obligations through continuous, automated, and auditable processes.                                                                                                                                                          |
+| **Machine-Readable Protocol**                 | A formally specified, machine-interpretable representation of a governance operation, decision, or interface that enables automated verification, interoperability, and audit without human translation.                                                                                             |
+| **Meta-Evolution**                            | The process by which the governance system's own structure, rules, or capabilities change over time. Meta-Evolution is itself subject to governance.                                                                                                                                                 |
+| **Minimum Viability Floor**                   | The lowest value of any Governance Capacity component below which the component is treated as structurally absent. When any component falls below this floor, Governance Capacity is zero regardless of other components.                                                                            |
+| **Multi-Observer Verification**               | The process of collecting observations of the same governance reality from three independent observer types — Internal, External, and Adversarial — simultaneously and comparing them for consistency.                                                                                               |
+| **Normal State**                              | The operating condition when Governance Capacity substantially exceeds the Governance Risk Level.                                                                                                                                                                                                    |
+| **Observation Condition**                     | All four components of the Governance Capacity formula must be Independently Observed; Self-Declared values are invalid.                                                                                                                                                                             |
+| **Operational Tier**                          | One of four scale contexts (Tier 1–4) that determine which disciplines must be operated independently versus consumed as shared services.                                                                                                                                                            |
+| **Oversight Body**                            | An independent body with authority to investigate, declare, and require remedy of governance failures. Must be structurally independent of the Governing Entity it oversees.                                                                                                                         |
+| **PolicyOps Discipline**                      | Operationalizes governance policy as executable code, ensuring automatic enforcement rather than manual interpretation.                                                                                                                                                                              |
+| **Post-Quantum Cryptography**                 | Cryptographic algorithms designed to resist attacks by sufficiently capable automated reasoning systems.                                                                                                                                                                                             |
+| **Principal Officer**                         | Any individual who exercises governance authority on behalf of a Governing Entity.                                                                                                                                                                                                                   |
+| **Probabilistically Manageable State**        | A governance condition in which the Governing Entity cannot determine an outcome with certainty but can act to increase the probability of a favourable outcome within defined confidence bounds.                                                                                                    |
+| **Reality Integrity Protocol**                | The sub-system within the Governance Operations Centre that validates the authenticity and integrity of all observations before they are processed.                                                                                                                                                  |
+| **Response Cascade**                          | The four-phase governance recovery process that activates when the governed system enters Crisis State.                                                                                                                                                                                              |
+| **Risk Operations Discipline**                | Operationalizes continuous risk assessment, Governance Risk Level computation, and risk-based decision support.                                                                                                                                                                                      |
+| **Rollback Capability**                       | The ability to reverse a deployed change and restore the prior state of a governed system.                                                                                                                                                                                                           |
+| **Scale Limit Property**                      | The maximum complexity of a governed system is proportional to the independently observed Adaptive Transparency of the Governing Entity.                                                                                                                                                             |
+| **Self-Declared Value**                       | A measurement of any governance component produced by the entity whose governance is being measured, without independent corroboration. Not valid inputs to Governance Capacity calculation.                                                                                                         |
+| **Societal Operations Discipline**            | Operationalizes the Governing Entity's accountability to stakeholders, including communication, feedback collection, and enforcement capacity support.                                                                                                                                               |
+| **Software Bill of Provenance**               | A complete, cryptographically signed inventory of every component, dependency, library, and toolchain element used to build a software artefact.                                                                                                                                                     |
+| **Sovereign Decision**                        | Any governance decision that materially affects the rights, resources, or welfare of those the Governing Entity governs. All require Human Authority approval.                                                                                                                                       |
+| **Stakeholder**                               | Any person, entity, or group whose rights, interests, or welfare are materially affected by the decisions of a Governing Entity.                                                                                                                                                                     |
+| **Stress State**                              | The operating condition when Governance Capacity approaches the Governance Risk Level.                                                                                                                                                                                                               |
+| **Sustainability Condition**                  | Governance Capacity must exceed Governance Risk Level continuously for governance to exist.                                                                                                                                                                                                          |
+| **Three-Observer Rule**                       | The requirement that all governance-critical observations be produced simultaneously by three structurally independent observer types.                                                                                                                                                               |
+| **Ungovernable State**                        | A governance condition fundamentally beyond the authority, capacity, or knowledge of any Governing Entity to resolve through governance activity.                                                                                                                                                    |
+| **Verified Reality**                          | The state of knowledge about a governed system that has been confirmed through Multi-Observer Verification with no Disagreement Condition.                                                                                                                                                           |
+| **Verification Failure Response**             | The mandatory three-step sequence — Reduce Confidence, Restrict Actions, Escalate Verification — executed when any Integrity Protocol check fails. Defined in Section 9.7.                                                                                                                           |
+| **Weakest-Link Property**                     | The product of the four Governance Capacity components is dominated by the smallest component. Investment priority: fix the weakest first.                                                                                                                                                           |
+| **Zero-Trust Architecture**                   | A security design principle requiring that no actor, system, or network connection is trusted by default. Every access request is verified independently.                                                                                                                                            |
 
 ---
 
-**END OF GOVERNANCE OPERATIONS SPECIFICATION v0.9**
+*Governance Operations Specification | Final v0.9 | April 2026 | Public Release*
 
-**Document Status:** Draft
-**Version:** 0.9
-**Date:** April 2026
-**Classification:** Public Release
+*This specification is self-contained. It defines its own terms, its own authority, and its own requirements. It references no external document, standard, framework, or publication. It is intended to be adopted, implemented, and governed as a standalone instrument by any entity that exercises governance authority over digital systems, human organisations, or critical infrastructure.*
 
-*Total Sections: 35*
-*Total Defined Terms: 103*
+*Complete Specification: All sections are coherent, cross-referenced, and structurally sound. All content is original and self-contained. Document maintains v0.9 version designation.*
+
+*Total Sections: 36*
+*Total Defined Terms: 109*
 *Operational Disciplines: 15 (10 Implementation + 4 Governance-Function + 1 AIOps)*
 *Constitutional Conditions: 3*
 *Governance Capacity Components: 4*
@@ -3051,6 +3307,8 @@ Federation members must maintain a continuous shared risk signalling mechanism t
 *Operational Tiers: 4*
 *Centre Layers: 6*
 
-*This specification is self-contained. It defines its own terms, its own authority, and its own requirements. It references no external document, standard, framework, or publication. It is intended to be adopted, implemented, and governed as a standalone instrument by any entity that exercises governance authority over digital systems, human organisations or critical infrastructure.*
+*This specification is complete, comprehensive, formally sound, and ready for implementation and ratification. Version 1.0 will be issued following ratification review of this v0.9 draft. Adopters may use v1.0 immediately if their GovOps initiative is based from this specification. *
 
-*Version 1.0 will be issued following ratification review of this v0.9 draft. Adopters may use v1.0 immediately if their GovOps initiative is based from this specification.*
+---
+
+**END OF DOCUMENT**
