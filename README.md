@@ -1,7 +1,7 @@
 # GovOps — Governance Authority
 
 This repository defines the **human and procedural governance authority** for the
-Governance Operations, transferred from Irradi‑ato‑rs, GovOps system.
+Governance Operations, transferred from Irradi.ato.rs, GovOps system.
 
 **The GovOps Spec Final v0.9 is stand-alone and is not dependent on any artifact under Governance Operations (https://github.com/GovernanceOperations) and Irradi.ato.rs (https://github.com/Irradi-ato-rs), both organizations, their repositories and projects within GitHub**.
 
