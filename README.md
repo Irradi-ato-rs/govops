@@ -1,9 +1,9 @@
-# GovOps — Irradi.ato.rs Governance Authority
+# GovOps — Governance Authority
 
 This repository defines the **human and procedural governance authority** for the
 Irradi‑ato‑rs GovOps system.
 
-The GovOps Spec Final v0.9 is stand-alone and is not dependent on any artifact under Irradi.ato.rs' repository.
+**The GovOps Spec Final v0.9 is stand-alone and is not dependent on any artifact under Governance Operations (https://github.com/GovernanceOperations) and Irradi.ato.rs (https://github.com/Irradi-ato-rs), both organizations, their repositories and projects within GitHub**.
 
 It documents **who governs**, **how governance decisions are handled**, and **how governance
 questions are escalated**, without performing validation or enforcement itself.
@@ -83,9 +83,13 @@ Discussions **do not approve**, **do not decide**, and **do not override** gover
 
 ## Authority Statement
 
-Governance authority is held by **Irradi.ato.rs GovOps**.
+Governance authority is held by **Governance Operations or Irradi.ato.rs GovOps**.
 
 Enforcement authority is held **exclusively** by **rexce**.
+
+---
+
+**Watch out as the Governance Operations and its entirety is continuously being developed, tested and updated. However, the GOVERNANCE OPERATIONS SPECIFICATION and associated disciplines as they become available should be considered authoritative for adopters**. Still the risks are all yours to make, not these organizations mentioned here or any of its proponents and developers.
 
 ---
 
