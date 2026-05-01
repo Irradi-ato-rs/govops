@@ -1360,11 +1360,6 @@ Privileged access requirements:
 
 ---
 
-# Governance Operations Specification
-## Final v0.9 — Sections 16-36
-
----
-
 ## 16. Data Sovereignty
 
 ### 16.1 The Sovereignty Principle
